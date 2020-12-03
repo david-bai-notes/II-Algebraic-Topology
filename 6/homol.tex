@@ -1,0 +1,290 @@
+\section{Homology Calculations and Applications}
+\begin{example}
+    If $S^n\simeq S^m$, then $m=n$.
+    This follows immediately from our calculation of the homology groups of simplices which are the triangulations of the spheres.
+\end{example}
+\begin{theorem}
+    If $\mathbb R^n\cong\mathbb R^m$, then $m=n$.
+\end{theorem}
+\begin{proof}
+    Suppose we are given a homeomorphism $\phi:\mathbb R^m\to\mathbb R^n$, then by a translation we can assume WLOG that $\phi(0)=0$.
+    Then we can restrict $\phi$ so that $\mathbb R^n\setminus\{0\}$ and $\mathbb R^m\setminus\{0\}$, which are homotopic to $S^{n-1}$ and $S^{m-1}$ respectively, consequently $S^{n-1}\simeq S^{m-1}$, so $n=m$.
+\end{proof}
+\begin{proposition}
+    Any map $\phi:D^n\to D^n$ has a fixed point.
+\end{proposition}
+\begin{proof}
+    Repeat the argument as in the $D^2$ case and finish the argument by homology.
+\end{proof}
+\subsection{Mayer-Vietoris Theorem}
+The Mayor-Vietoris theorem is an analog of Seifert-van Kampen theorem as in both deals with the algebraic invariants of spaces that are constructed by gluing.
+\begin{definition}
+    A sequence of homomorphisms of abelian groups
+    \[
+        \begin{tikzcd}
+            \cdots\arrow{r}&A_{i+1}\arrow{r}{f_i}&A_i\arrow{r}{f_{i-1}}&A_{i-1}\arrow{r}&\cdots
+        \end{tikzcd}
+    \]
+    is exact at $A_i$ if $\operatorname{Im}f_i=\ker f_{i-1}$.
+    We say the sequence is exact if it is exact at every $A_i$.
+\end{definition}
+Consequenly, any exact sequence is a chain complex with all homology groups trivial.
+\begin{definition}
+    A short exact sequence is an exact sequence in the form
+    \[
+        \begin{tikzcd}
+            0\arrow{r}&A\arrow{r}&B\arrow{r}&C\arrow{r}&0
+        \end{tikzcd}
+    \]
+\end{definition}
+So necessarily $A\to B$ is injective, $B\to C$ is surjective and $C\cong B/A$.
+An exact sequence that is not short is of course called a long exact sequence.\\
+Suppose $K$ is a simplicial complex with $K=L\cup M$ where $L,M$ are subcomplexes of $K$.
+Then $N=L\cap M$ is also a subcomplex.
+We usually write $K=L\cup_NM$.
+Analogous to what we did in Seifert-van Kampen theorem, we want to relate the homology groups of $L,M,N$ to the homology group of $K$.
+Of course we immediately get the natual inclusion maps
+$$i:N\to L,j:N\to M,l:L\to K,m:M\to K$$
+\begin{theorem}[Mayer-Vietoris]\label{mayer-vietoris}
+    There exists a map (known as the connecting homomorphism) $\delta_\ast:H_n(K)\to H_{n-1}(N)$ for each $n$ such that the sequence
+    \[
+        \begin{tikzcd}
+            \cdots\arrow{r}{\delta_\ast}&H_n(N)\arrow{r}{i_\ast\oplus j_\ast}&H_n(L)\oplus H_n(M)\arrow{r}{l_\ast-m_\ast}&H_n(K)\arrow[swap,overlay,out=0,in=180]{dll}{\delta_\ast}&\\
+            &H_{n-1}(N)\arrow[swap]{r}{i_\ast\oplus j_\ast}&H_{n-1}(L)\oplus H_{n-1}(M)\arrow[swap]{r}{l_\ast-m_\ast}&H_{n-1}(K)\arrow[swap]{r}{\delta_\ast}&\cdots
+        \end{tikzcd}
+    \]
+    is exact.
+\end{theorem}
+We will prove this after further development on homological algebra.
+\begin{definition}
+    We say a sequence of chain complexes
+    \[
+        \begin{tikzcd}
+            \cdots\arrow{r}&A_\bullet\arrow{r}{f_\bullet}&B_\bullet\arrow{r}{g_\bullet}&C_\bullet\arrow{r}&\cdots
+        \end{tikzcd}
+    \]
+    is exact at $B_\bullet$ if
+    \[
+        \begin{tikzcd}
+            \cdots\arrow{r}&A_n\arrow{r}{f_n}&B_n\arrow{r}{g_n}&C_n\arrow{r}&\cdots
+        \end{tikzcd}
+    \]
+    is exact for every $n$.
+\end{definition}
+So we can analogously define (short) exact sequences of chain complexes.
+\begin{lemma}[Snake Lemma]
+    Let
+    \[
+        \begin{tikzcd}
+            0\arrow{r}&A_\bullet\arrow{r}{f_\bullet}&B_\bullet\arrow{r}{g_\bullet}&C_\bullet\arrow{r}&0
+        \end{tikzcd}
+    \]
+    be a short exact sequence of chain complexes.
+    Then for any $n$ there is a homomorphism $\delta_\ast:H_{n+1}(C_\bullet)\to H_n(A_\bullet)$ such that
+    \[
+        \begin{tikzcd}
+            \cdots\arrow{r}{\delta_\ast}&H_{n+1}(A_\bullet)\arrow{r}{f_\ast}&H_{n+1}(B_\bullet)\arrow{r}{g_\ast}&H_{n+1}(C_\bullet)\arrow[swap,overlay,out=0,in=180]{dll}{\delta_\ast}&\\
+            &H_n(A_\bullet)\arrow[swap]{r}{f_\ast}&H_n(B_\bullet)\arrow[swap]{r}{g_\ast}&H_n(C_\bullet)\arrow[swap]{r}{\delta_\ast}&\cdots
+        \end{tikzcd}
+    \]
+    is exact.
+\end{lemma}
+\begin{proof}
+    We already have this huge commutative diagram with exact rows
+    \[
+        \begin{tikzcd}
+            &\vdots\arrow{d}&\vdots\arrow{d}&\vdots\arrow{d}&\\
+            0\arrow{r}&A_{n+1}\arrow{r}{f_{n+1}}\arrow{d}{\partial_{n+1}}&B_{n+1}\arrow{r}{f_{n+1}}\arrow{d}{\partial_{n+1}}&C_{n+1}\arrow{r}\arrow{d}{\partial_{n+1}}&0\\
+            0\arrow{r}&A_n\arrow{r}{f_n}\arrow{d}{\partial_n}&B_n\arrow{r}{f_n}\arrow{d}{\partial_n}&C_n\arrow{r}\arrow{d}{\partial_n}&0\\
+            0\arrow{r}&A_{n-1}\arrow{r}{f_{n-1}}\arrow{d}&B_{n-1}\arrow{r}{g_{n-1}}\arrow{d}&C_{n-1}\arrow{r}\arrow{d}&0\\
+            &\vdots&\vdots&\vdots&
+        \end{tikzcd}
+    \]
+    We now construct $\delta_\ast:H_{n+1}(C_\bullet)\to H_n(A_\bullet)$.
+    Take $[x]\in H_{n+1}(C_\bullet)$ for $x\in Z_{n+1}(C_\bullet)$.
+    As $g_{n+1}$ is surjective, there is $x\in B_{n+1}$ such that $g_{n+1}(y)=x$.
+    Now $g_n\circ\partial_{n+1}(y)=\partial_{n+1}\circ g_{n+1}(y)=\partial_{n+1}(x)=0$.
+    So by exactness, there exists $z\in A_n$ such that $f_n(z)=\partial_{n+1}(y)$.
+    Note that $f_{n-1}\circ\partial_n(z)=\partial_n\circ f_n(z)=\partial_n\circ\partial_{n+1}(y)=0$, so $\partial_n(z)=0$ since $f_{n-1}$ is injective.
+    This means that $z\in Z_n(A_\bullet)$, so we define $\delta_\ast([x])=[z]$.
+    To see it is well-defined, we have two issues to deal with:\\
+    First, if we replace $x$ by $x+\partial_{n+2}(x')$ and $g_{n+2}(y')=x'$ , then replace $y$ with $y+\partial_{n+2}(y')$.
+    Then $g_{n+1}(y+\partial_{n+2}(y'))=g_{n+1}(y)+\partial_{n+2}\circ g_{n+2}(y')=x+\partial_{n+2}(x')$.
+    But $\partial_{n+1}(y+\partial_{n+2}(y'))=\partial_{n+1}(y)$, so $z$ does not change.\\
+    Secondly, if we have made up our mind on $x$ and $y,y'$ are chosen with $g_{n+1}(y')=g_{n+1}(y)=x$, then $g_{n+1}(y'-y)=0$, therefore by exactness there is some $z'$ such that $f_{n+1}(z')=y'-y$, thus $y'=y+f_{n+1}(z')$.
+    So $\partial_{n+1}(y')=\partial_{n+1}(y)+\partial_{n+1}\circ f_{n+1}(z')=\partial_{n+1}(y)+f_n\circ\partial_{n+1}(z')$, which means $f_n(z+\partial_{n+1}(z'))=\partial_{n+1}(y)+f_n\circ\partial_{n+1}(z')=\partial_{n+1}(y')$.
+    This is saying that replacing $y$ by $y'$ modifies $z$ by adding $\partial_{n+1}(z')$.
+    But $[z]=[z+\partial_{n+1}(z')]$, so $\delta_\ast$ is well-defined.\\
+    The proof of the sequence being exact is tedious routine work.\\
+    At $H_n(B_\bullet)$, if $[a]\in H_n(A_\bullet)$, then by definition $g_\ast\circ f_\ast([a])=[g_n\circ f_n(a)]=0$ by the exactness of our original short exact sequence.
+    So $\operatorname{Im}f_\ast\subset \ker g_\ast$.
+    Now if $g_\ast([b])=0$, then $[g_n(b)]=g_\ast([b])=0$, thus there is some $c\in C_{n+1}$ with $g_n(b)=\partial_{n+1}(c)$.
+    But then choosing $b'\in B_{n+1}$ with $g_{n+1}(b')=c$ by exactness gives $g_n(b-\partial_{n+1}(b'))=0$, hence $b-\partial_{n+1}(b')\in\ker g_n=\operatorname{Im}f_n$, so there is some $a\in A_n$ such that $f_n(a)=b-\partial_{n+1}(b')$.
+    In particular, $f_\ast([a])=[f_n(a)]=[b-\partial_{n+1}(b')]=[b]$, therefore $\operatorname{Im}f_\ast\supset\ker g_\ast$.
+    Combining these gives $\operatorname{Im}f_\ast=\ker g_\ast$ which implies the exactness at $H_n(B_\bullet)$.\\
+    At $H_n(A_\bullet)$, suppose $[z]=\delta_\ast([x])$, then $f_\ast([z])=[f_n(z)]=[\partial_{n+1}(y)]=0$ where $y$ is as in the construction of $\delta_\ast$, so $\operatorname{Im}\delta_\ast\subset\ker f_\ast$.
+    Suppose now that $f_\ast([z])=0$, then $f_n(z)=\partial_{n+1}(y)$ for some $y\in B_{n+1}$.
+    Take $x=g_{n+1}(y)$, then $\partial_{n+1}(x)=\partial_{n+1}\circ g_{n+1}(y)=g_n\circ\partial_{n+1}(y)=g_n\circ f_n(z)=0$, so $x$ is a cycle, so $[x]$ is a homology class.
+    But $\delta_\ast([x])=[z]$ by construction, hence $\operatorname{Im}\delta_\ast\supset\ker f_\ast$, therefore $\operatorname{Im}\delta_\ast=\ker f_\ast$ which gives the exactness at $H_n(A_\bullet)$.\\
+    At $H_n(C_\bullet)$, if $[x]\in\operatorname{Im}g_\ast$, then (ater replacing $x$ with another representative if necessary) WLOG there exists a cycle $y\in B_n$ such that $g_n(y)=x$.
+    But then immediately $\delta_\ast([x])=0$, so $\operatorname{Im}g_\ast\subset\ker\delta_\ast$.
+    Conversely, suppose $\delta_\ast([x])=0$, then let $y,z$ be the corresponding element in the construction of $\delta_\ast$.
+    By hypothesis there exists $a\in A_n$ such that $\partial_n(a)=z$.
+    Then $\partial_n\circ f_n(a)=f_{n-1}\circ\partial_n(a)=f_{n-1}(z)=\partial_n(y)$.
+    Thus $\partial_n(y-f_n(a))=0$, so $y-f_n(a)$ is a cycle.
+    Also $g_n(y-f_n(a))=x$, so $[x]=g_\ast([y-f_n(a)])$.
+    Consequently $\operatorname{Im}g_\ast\supset\ker\delta_\ast$, so $\operatorname{Im}g_\ast=\ker\delta_\ast$.
+    This finished the proof.
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{mayer-vietoris}]
+    Easy to check that $C_\bullet\oplus D_\bullet$ is a chain complex with all data obtained from direct sums of data of $C_\bullet,D_\bullet$.
+    Also $H_n(C_\bullet\oplus D_\bullet)=H_n(C_\bullet)\oplus H_n(D_\bullet)$.
+    It then suffices to check that
+    \[
+        \begin{tikzcd}
+            0\arrow{r}&C_\bullet(N)\arrow{r}{i_\bullet\oplus j_\bullet}&C_\bullet(L)\oplus C_\bullet(M)\arrow{r}{l_\bullet-m_\bullet}&C_\bullet(K)\arrow{r}&0
+        \end{tikzcd}
+    \]
+    is exact.
+    The proof is then done by snake lemma.\\
+    Note that $C_\bullet(N)$ naturally embeds into $C_\bullet (L)$ and $C_\bullet(M)$ via $i_\bullet\oplus j_\bullet$, so in particular $i_\bullet\oplus j_\bullet$ is a injective.
+    Also since $K=L\cup M$, for any $c\in C_n(K)$ we can write $c=c_L+c_M$ where $c_L$ is a linear combination of simplices in $L$ and $c_M$ is that in $M$.
+    Let $b_L,b_M$ be the respective copies of $c_L,c_M$ in $C_n(L),C_n(M)$ respectively, then $l_\bullet(b_L)=c_L,m_\bullet(b_M)=c_M$, and hence $c=(l_\bullet-m_\bullet)(b_L,-b_M)$, so $l_\bullet-m_\bullet$ is surjective.\\
+    It remains to show the exactness in the middle.
+    For $(b_L,b_M)\in C_n(L)\oplus C_n(M)$, note that $l_\bullet(b_L)-m_\bullet(b_M)=0$ iff every simplex which occurs in $b_L$ also occurs in $b_M$ with the same coefficient.
+    This is just saying that $b_L,b_M$ are linear combinations of simplices in $L\cap M=N$.
+    Therefore $\operatorname{Im}(i_\bullet\oplus j_\bullet)=\ker (l_\bullet-m_\bullet)$, hence the sequence is indeed exact.
+\end{proof}
+\begin{lemma}[Five Lemma]
+    Given a commutative diagram
+    \[
+        \begin{tikzcd}
+            A\arrow{r}\arrow{d}{\alpha}&B\arrow{r}\arrow{d}{\beta}&C\arrow{r}\arrow{d}{\gamma}&D\arrow{r}\arrow{d}{\delta}&E\arrow{d}{\epsilon}\\
+            A'\arrow{r}&B'\arrow{r}&C'\arrow{r}&D'\arrow{r}&E'
+        \end{tikzcd}
+    \]
+    If the rows are exact and $\alpha,\beta,\delta,\epsilon$ are isomorphisms, then $\gamma$ is also an isomorphism.
+\end{lemma}
+\begin{proof}
+    Exercise.
+\end{proof}
+We can now prove Proposition \ref{barycentric_iso_homol}.
+Recall that we want to show that $s_\ast:H_n(K')\to H_n(K)$ is an isomorphism where $s:K'\to K$ is a simplicial approximation to the identity map on $|K|=|K'|$ which sends each $\hat\sigma$ to a vertex of $\sigma$.
+\begin{proof}[Proof of Proposition \ref{barycentric_iso_homol}]
+    Induction on the number of simplices of $K$.
+    If $K$ has only one simplex, then it is just a vertex, so the proposition is trivial.
+    For the induction step, let $\sigma\in K$ be of maximal dimension, then $L=K\setminus \{\sigma\}$ is also a simplicial complex.
+    Let $M$ be the simplicial complex consists of $\sigma$ and its faces.
+    Then $N=M\cap L$ is just the proper faces of $\sigma$.
+    By construction of $s$ we can restrict $s$ to $L',M',N'$ to get the maps
+    $$s_\ast:H_n(L')\to H_n(L),s_\ast:H_n(M')\to H_n(M),s_\ast:H_n(N')\to H_n(N)$$
+    By the induction hypothesis, these are all isomorphisms.
+    Then by Mayer-Vietoris, we have the diagram
+    \[
+        \begin{tikzcd}[column sep=0.34em]
+            H_n(N')\arrow{r}\arrow{d}{s_\ast}&H_n(L')\oplus H_n(M')\arrow{r}\arrow{d}{s_\ast\oplus s_\ast}&H_n(K')\arrow{r}\arrow{d}{s_\ast}&H_{n-1}(N')\arrow{r}\arrow{d}{s_\ast}&H_{n-1}(L')\oplus H_{n-1}(M')\arrow{d}{s_\ast\oplus s_\ast}\\
+            H_n(N)\arrow{r}&H_n(L)\oplus H_n(M)\arrow{r}&H_n(K)\arrow{r}&H_{n-1}(N)\arrow{r}&H_{n-1}(L)\oplus H_{n-1}(M)
+        \end{tikzcd}
+    \]
+    with exact rows.
+    Easy to check that it commutes.
+    Also, by the induction hypothesis, all vertical arrows except $s_\ast:H_n(K')\to H_n(K)$ are isomorphisms.
+    Hence $s_\ast:H_n(K')\to H_n(K)$ is an isomorphism by five lemma.
+\end{proof}
+\subsection{Homology of Compact Surfaces}
+Recall that we constructed the oriented surfaces of genus $g$ as $\Sigma_g=\Gamma_{2g}\cup_{\rho_g}D^2$ where $\Gamma_{2g}$ is a bouquet of $2g$ copies of $S^1$ with generators $\alpha_1,\ldots,\alpha_g,\beta_1,\ldots,\beta_g$ and $\rho_g=\alpha_1\beta_1\alpha_1^{-1}\beta_1^{-1}\cdots \alpha_g\beta_g\alpha_g^{-1}\beta_g^{-1}$.
+\begin{example}
+    $\Gamma_r$ can be triangulated in the obvious way by taking it as $r$ hollow triangles joined by a common vertex.
+    We know that $H_n(\Gamma_1)$ is $\mathbb Z$ when $n=0,1$ and $0$ otherwise.
+    We claim that
+    $$H_i(\Gamma_r)=\begin{cases}
+        \mathbb Z\text{, if $i=0$}\\
+        \mathbb Z^r\text{, if $i=1$}\\
+        0\text{, otherwise}
+    \end{cases}$$
+    which we shall show inductively.
+    The cases except for $i=1$ are all trivial, so it suffices to show that.
+    Suppose we have shown the case for $r-1$, then take $K=\Gamma_r$, $L$ be a natural copy of $\Gamma_{r-1}$ in $\Gamma_r$ and $M$ be the remaining triangle.
+    Then $N=L\cap M=\{\ast\}$ and hence Mayer-Vietoris gives the exact sequence
+    \[
+        \begin{tikzcd}
+            0\arrow{r}&H_1(N)\arrow{r}&H_1(\Gamma_{r-1})\oplus H_1(S^1)\arrow{r}& H_1(\Gamma_r)\arrow[overlay, out=0, in=180]{dll}&\\
+            &H_0(N)\arrow{r}&H_0(\Gamma_{r-1})\oplus H_0(S^1)\arrow{r}& H_0(\Gamma_r)\arrow{r}&0
+        \end{tikzcd}
+    \]
+    which, after putting in everything we already know,
+    \[
+        \begin{tikzcd}
+            0\arrow{r}&0\arrow{r}&\mathbb Z^{r-1}\oplus \mathbb Z\arrow{r}& H_1(\Gamma_r)\arrow[overlay, out=0, in=180]{dll}&\\
+            &\mathbb Z\arrow{r}&\mathbb Z\oplus \mathbb Z\arrow{r}& \mathbb Z\arrow{r}&0
+        \end{tikzcd}
+    \]
+    By exactness of the bottom row, the map $\mathbb Z\to\mathbb Z\oplus\mathbb Z$ is injective (alternatively this can also be easily seen from the definition of that map), hence the connecting homomophism is the zero map.
+    Therefore the top row reduces to the exact sequence
+    \[
+        \begin{tikzcd}
+            0\arrow{r}&\mathbb Z^{r-1}\oplus \mathbb Z\arrow{r}& H_1(\Gamma_r)\arrow{r}&0
+        \end{tikzcd}
+    \]
+    which precisely means that $H_1(\Gamma_r)\cong\mathbb Z^{r-1}\oplus \mathbb Z\cong\mathbb Z^r$.
+\end{example}
+Worth noting that $H_1(\Gamma_r)$ is the free abelian group on $r$ letters while $\pi_1(\Gamma_r)$ is the free group on $r$ letters.
+Also, if $\alpha_1,\ldots,\alpha_r$ are the generating paths of the circles, then $H_1(\Gamma_r)$ is generated by $\alpha_1,\ldots,\alpha_r$.
+\begin{remark}
+    Like in the preceding exacmple, whenever $N$ is connected, the map $H_0(N)\to H_0(L)\oplus H_0(M)$ is injective, and hence $H_1(L)\oplus H_1(M)\to H_1(K)$ is surjective.
+\end{remark}
+Now we want to attach our $2$-cell to get $\Sigma_g$.
+We'll do this in two steps.\\
+First, we attach a cylinder $S^1\times I$ via the same $\rho_g$ but on $S^1\times\{0\}$.
+Write $\Sigma_g^\star=\Gamma_{2g}\cup_{\rho_g} (S^1\times I)$
+By shrinking $I$ to a point we can obtain the deformation retraction of $\Sigma_g^\star$ onto $\Gamma_{2g}$, therefore they have the same homology groups.\\
+Now $\Sigma_g=\Sigma_g^\star\cup_\alpha D^2$ where $\alpha:\partial D^2\to S^1\times \{1\}$ is the natural identity.
+We can choose triangulations of $\Sigma_g^\star$ and $D^2$ so that they are compatible under this gluing (so we are essentially removing a $D^2$ from $\Sigma_g$ to get $\Sigma_g^\star$).
+\footnote{There are of course some technical details regarding why we can do this, but we are not going into this part of details here. It is not too hard though.}
+Let $L$ be the triangulation of $\Sigma_g^\star$ and $M$ be the triangulation of $D^2$ such that this holds.
+Then $N=L\cap M$ is a triangulation of $S^1\times\{1\}\cong S^1$.
+Majer-Vietoris then gives the exact sequence
+\[
+    \begin{tikzcd}
+        &H_2(L)\oplus H_2(M)\arrow{r}&H_2(\Sigma_g)\arrow[overlay, out=0,in=180]{dll}&\\
+        H_1(N)\arrow[swap]{r}{i_\ast}&H_1(L)\oplus H_1(M)\arrow{r}&H_1(\Sigma_g)\arrow{r}&0
+    \end{tikzcd}
+\]
+Note that the zero at the end is due to the preceding remark.
+Again putting everything we already know into it gives
+\[
+    \begin{tikzcd}
+        0\arrow{r}&H_2(\Sigma_g)\arrow{r}&\mathbb Z\arrow{r}{i_\ast}&\mathbb Z^{2g}\arrow{r}&H_1(\Sigma_g)\arrow{r}&0
+    \end{tikzcd}
+\]
+The exactness means that $H_2(\Sigma_g)\cong\ker i_\ast$ and $H_1(\Sigma_g)\cong\operatorname{coker}i_\ast=\mathbb Z^{2g}/\operatorname{Im}i_\ast$.
+So we just need to understand $i_\ast:\mathbb Z\to\mathbb Z^{2g}$, or in other words $i_\ast:H_1(S^1)\to H_1(\Sigma_g^\star)$.
+Note that the generator of $H_1(S^1)$ is the cycle runs through it (which is basically the one corresponding to the generator of $\pi_1(S^1)$).
+The deformation retract of $\Sigma_g^\star$ to $\Gamma_{2g}$ identifies $S^1$ with the image of the cycle under $\rho_g$.
+Therefore $(\rho_g)_\ast$ maps the cycle to $[\alpha_1]+[\beta_1]-[\alpha_1]-[\beta_1]+\cdots+[\alpha_g]+[\beta_g]-[\alpha_g]-[\beta_g]=0$.
+Therefore $i_\ast=0$ and hence $H_2(\Sigma_g)\cong\mathbb Z$ and $H_1(\Sigma_g)\cong\mathbb Z^{2g}$.
+To conclude,
+$$H_n(\Sigma_g)\cong\begin{cases}
+    \mathbb Z\text{, if $n=0,2$}\\
+    \mathbb Z^{2g}\text{, if $n=1$}\\
+    0\text{, otherwise}
+\end{cases}$$
+which in particular allows us to know $g$ given the homology group of some $\Sigma_g$.\\
+We also have the non-orientable surfaces $S_g$ which is given by $\Gamma_{g+1}\cup_\alpha D^2$ where $\alpha=\alpha_0^2\alpha_1^2\cdots\alpha_g^2$ where $\alpha_i$ is the generator of the $i^{th}$ circle in the bouquet.
+Repeating the same process gives the exact sequence
+\[
+    \begin{tikzcd}[row sep=tiny]
+        0\arrow{r}&H_2(\Sigma_g)\arrow{r}&H_1(S^1)\arrow{r}{i_\ast}&H_1(\Gamma_{g+1})\arrow{r}&H_1(\Sigma_g)\arrow{r}&0\\
+        &&\mathbb Z\arrow[equal]{u}&\mathbb Z^{g+1}\arrow[equal]{u}&
+    \end{tikzcd}
+\]
+So again $H_2(S_g)\cong\ker i_\ast$ and $H_1(S_g)\cong\operatorname{coker}i_\ast$.
+Note that $i_\ast$ maps the generator of $H_1(S^1)$ to the nonzero element $2[\alpha_0]+\cdots+2[\alpha_g]$.
+Hence $\ker i_\ast=0$ and $\operatorname{coker}i_\ast\cong\mathbb Z^{g+1}/(2,\ldots,2)\mathbb Z\cong\mathbb Z^g\oplus\mathbb Z/2\mathbb Z$.
+In conclusion
+$$H_n(S_g)\cong\begin{cases}
+    \mathbb Z\text{, if $n=0$}\\
+    \mathbb Z^g\oplus\mathbb Z/2\mathbb Z\text{, if $n=1$}\\
+    0\text{, otherwise}
+\end{cases}$$
+In particular we can tell apart $S_g$ and $\Sigma_g$ as well.

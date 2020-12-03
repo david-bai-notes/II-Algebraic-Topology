@@ -1,0 +1,182 @@
+\section{Simplicial Complexes}
+Our next family of algebraic invariants is called homology, which are hard to define but easy to calculate when defined.
+But first, let us talk about simplicial complexes.
+\subsection{Definitions}
+\begin{definition}
+    A finite set $V=\{v_0,\ldots,v_n\}\subset\mathbb R^m$ is said to be in general position if the smallest affine linear subspace (translation of a linear subspace) of $\mathbb R^m$ containing $V$ has dimension $n$.
+\end{definition}
+Consequently, no set of $n$ points in $\mathbb R^m$ would be in general position if $n>m$.
+Another way of defining this is that $\{v_1-v_0,\ldots,v_n-v_0\}$ are linearly independent.
+\begin{definition}
+    The span or a convex hull of a set $V=\{v_0,\ldots,v_n\}\subset\mathbb R^m$ is
+    $$\langle V\rangle=\left\{ \sum_{i=0}^nt_iv_i:\sum_{i=0}^nt_i=1,t_i\ge 0\right\}$$
+    If $V$ is in general position, then $\langle V\rangle$ is said to be an $n$-simplex.
+\end{definition}
+Sometimes we omit the set bracket and just write $\langle v_0,\ldots,v_n\rangle$ as $\langle V\rangle=\langle \{v_0,\ldots,v_n\}\rangle$.
+So a $0$-simplex is just a point, a $1$-simplex is a line segment, a $2$-simplex is a (solid) triangle and a $3$-simplex is a (solid) tetrahedron.
+\begin{definition}
+    If $V\subset\mathbb R^n$ is in general position and $U\subset V$, then $\langle U\rangle\subset\langle V\rangle$ is said to be a face of $V$, and we write $\langle U\rangle\subset\langle V\rangle$.
+    Furthermore, if $U\le V$ and $U\neq V$, then we call $\langle U\rangle$ a proper face of $\langle V\rangle$.
+\end{definition}
+The empty set is viewed as a face by convention.
+\begin{definition}
+    A simplicial complex is a finite set $K$ of simplices in $\mathbb R^m$ such that:\\
+    1. If $\sigma\in K$ and $\tau\le\sigma$, then $\tau\in K$.\\
+    2. If $\sigma,\tau\in K$, then $\sigma\cap\tau$ is a face of both $\sigma$ and $\tau$.
+\end{definition}
+\begin{example}
+    Just glue (well, not really, but you know what I mean) line segments, triangles, tetrahdrons together along the faces (aka edges, endpoints, etc.).
+    But if we take a triangle (and its faces) and a line segment (ditto) pointing into its interior, then we do not get a simplicial complex.
+\end{example}
+\begin{definition}
+    For a simplicial complex $K$, the dimension $\dim K$ of $K$ is the largest $n$ such that $K$ contains a $n$-simplex.
+    We write $K_{(d)}=\{\sigma\in K:\dim\sigma\le d\}$ as the $d$-skeleton of $K$, which is also a simplicial complex.
+\end{definition}
+\begin{example}
+    The set $F$ of faces of an $n$-simplex $\sigma$ is a simplicial complex, and the set of proper faces (which is called the boundary $\partial\sigma$ of $\sigma$) of $\sigma$ is also a simplicial complex and is the $(n-1)$ skeleton of $F$.
+    The interior $\sigma^\circ$ is the points in $\sigma$ that is not contained in any simplex in $\partial\sigma$.
+\end{example}
+\begin{definition}
+    The realisation of a simplicial complex $K$ is
+    $$|K|=\bigcup_{\sigma\in K}\sigma\subset\mathbb R^m$$
+    viewed as a topological space with topology induced as a subset of $\mathbb R^m$.\\
+    If $X$ is a space, then a triangulation of $X$ is a simplicial complex $K$ and a homeomorphism $|K|\to X$.
+    If a triangulation of $X$ exists, then $X$ is said to be triangulable.
+\end{definition}
+\begin{example}
+    $D^n$ is triangulable as it is homeomorphic to the $n$-simplex.
+    The realisation of the boundary of the $n$-simplex is then homeomorphic to the boundary of $D^n$ which is $S^{n-1}$, so the $n$-spheres are also triangulable.
+\end{example}
+\begin{remark}
+    There might be many different triangulations of the same space.
+\end{remark}
+\begin{definition}
+    Let $K,L$ be simplicial complexes.
+    A simplicial map is a map $f:K\to L$ such that:
+    1. Each $0$-simplex $\langle v\rangle\in K$ is sent to a $0$-simplex $\langle f(v)\rangle$ of $L$.\\
+    2. For any $\langle v_0,\ldots,v_n\rangle\in K$, we have $f(\langle v_0,\ldots,v_n\rangle)=\langle f(v_0),\ldots,f(v_n)\rangle$.\\
+    The realisation of $f$ is the map $|f|$ defined in the following way:
+    On each $\sigma=\langle v_0,\ldots,v_n\rangle\in K$, we want the restriction of $f$ to be
+    $$f|_\sigma=f_\sigma:\sum_{i=0}^nt_iv_i\mapsto\sum_{i=0}^nt_if(v_i)$$
+    which is obviously continuous and consistent as $f_\sigma|_\tau=f|_\tau$ for $\tau\le\sigma$.
+    So we can glue them together to get the continuous map $|f|:|K|\to |L|$.
+\end{definition}
+However, there is simply not enough simplicial maps to capture all possible maps $|K|\to|L|$ up to homotopy.
+\begin{example}
+    Consider the triangulation of the circle by gluing three line segments together (which makes it the realisation of $\partial\sigma_2$, the boundary of the $2$-simplex).
+    There are at most $3^3$ simplicial maps from $\partial\sigma_2$ to itself but infinitely many different homeomorphisms (hence homotopy equivalences) from the circle to itself.
+\end{example}
+The solution to this problem is to introduce the barycentric subdivision to refine triangulations.
+\subsection{Barycentric Subdivision and Simplicial Approximation}
+\begin{definition}
+    Let $V=\{v_0,\ldots, v_n\}$ be in general position, then
+    $$\hat\sigma=\frac{1}{n+1}\sum_{i=0}^nv_i$$
+    is the barycentre of $\sigma=\langle v\rangle$, which resides in $\sigma^\circ$.
+\end{definition}
+\begin{definition}
+    Let $K$ be a simplicial complex, a barycentric subdivision $K'$ of $K$ is the set of simplices such that:\\
+    1. The vertices ($0$-simplices) of $K'$ are the barycentres of simplices in $K$.\\
+    2. $\hat\sigma_0,\ldots,\hat\sigma_n$ span a simplex of $K'$ iff $\sigma_0<\sigma_1<\ldots<\sigma_n$.
+\end{definition}
+So we are just dividing the original simplex with new vertices introduced by barycentres.
+\begin{lemma}
+    Let $K$ be a simplicial complex, then $K'$ is a simplicial complex and $|K'|=|K|$.
+\end{lemma}
+\begin{proof}
+    First check that $\hat\sigma_0,\ldots,\hat\sigma_n$ is indeed in general position if $\sigma_0<\sigma_1<\ldots<\sigma_n$.
+    Indeed, if we have $t_0,\ldots,t_n$ such that
+    $$\sum_{i=0}^nt_i=0,\sum_{i=0}^nt_i\hat\sigma_i=0$$
+    Take $j$ to be the largest index such that $t_j\neq 0$.
+    If no such $j$ exist then we are done, otherwise
+    $$\hat{\sigma}_j=\sum_{i=0}^{j-1}\left(-\frac{t_i}{t_j}\right)\hat\sigma_i$$
+    is contained in $\sigma_{j-1}$ which is a proper face in $\sigma_j$, contradiction.
+    Therefore $\hat\sigma_0,\ldots,\hat\sigma_n$ is in general position.\\
+    Now $K'$ is clearly closed under passing to faces.
+    Furthermore, if we have two simplices $\sigma',\tau'\in K'$, write $\sigma'=\langle\hat\sigma_0,\ldots,\hat\sigma_m\rangle$ for $\sigma_0<\cdots<\sigma_m$ and $\tau'=\langle\hat\tau_0,\ldots,\hat\tau_n\rangle$ for $\tau_0<\cdots<\tau_n$.
+    Obviously $\sigma'\cap\tau'\subset \sigma_m\cap\tau_n$, whcih means that we can assume WLOG that $\sigma',\tau'\in\delta$ for some $\delta\in K$.
+    We proceed by induction in $\dim K$.
+    If one of $\sigma',\tau'$ does not contain $\hat\delta$, then $\sigma'\cap\tau'$ is contained in $\partial\delta$.
+    Otherwise, both $\sigma',\tau'$ contain $\hat\delta$, then $\sigma'\cap\tau'$ is the convex hull of $\{\hat\delta\}\cap(\sigma'\cap\partial\delta)\cap(\tau'\cap\partial\delta)$.
+    We are done by induction.\\
+    To see $|K'|=|K|$, it suffices to show that $|K|\subset |K'|$.
+    We will also use induction on $\dim K$.
+    The base case is trivial.
+    Let $\sigma=\langle v_0,\ldots,v_m\rangle\in K$ and $x\in\sigma$.
+    If $x=\hat\sigma$, then we are done.
+    Otherwise, we project $\pi:\sigma\setminus\{\hat\sigma\}\to|\partial\sigma|$ by mapping $y\in\sigma$ to the unique point in the intersection of the ray $\hat\sigma\to y$ and $|\partial\sigma|$.
+    By the induction hypothesis, $\pi(x)\in\langle\hat\sigma_1,\ldots,\hat\sigma_n\rangle\in K'$ for some $\sigma_1<\cdots<\sigma_n$, which implies $x\in\langle\hat\sigma_1,\ldots,\hat\sigma_n,\hat\sigma\rangle$.
+\end{proof}
+\begin{definition}
+    Set $K^{(0)}=K$ and $K^{(r)}=(K^{(r-1)})'$.
+    The simplicial complex $K^{(n)}$ is the $n^{th}$ barycentric subdivision of $K$.
+\end{definition}
+\begin{definition}
+    If $K$ is a simplicial complex, we set the mesh of $K$ to be
+    $$\operatorname{mesh}(K)=\max_{\langle u,v\rangle\in K}|u-v|$$
+\end{definition}
+\begin{lemma}
+    If $\dim K=n$, then
+    $$\operatorname{mesh}(K^{(r)})\le\left( \frac{n}{n+1} \right)^r\operatorname{mesh}(K)$$
+\end{lemma}
+\begin{proof}
+    Suffices to show the case for $r=1$.
+    If $\langle u,v\rangle\in K'=K^{(1)}$, then we know there is some $\tau<\sigma$ such that $u=\hat\tau,v=\hat\sigma$.
+    We can assume that $\tau$ is a $0$-simplex as this maximises the distance between $\hat\sigma$ and $\partial\sigma$.
+    Suppose $\sigma=\langle v_0,\ldots,v_n\rangle$ and $\hat\tau=\langle v_0\rangle$, then
+    \begin{align*}
+        |\hat\sigma-\hat\tau|&=\left|v_0-\sum_{i=0}^m\frac{1}{m+1}v_i\right|=\left|\frac{m}{m+1}v_0-\frac{1}{m+1}\sum_{i=1}^mv_i\right|\\
+        &=\left|\frac{1}{m+1}\sum_{i=1}^m(v_i-v_0)\right|\le\frac{1}{m+1}\sum_{i=1}^m|v_i-v_0|\\
+        &\le\frac{m}{m+1}\operatorname{mesh}(K)\\
+        &\le\frac{n}{n+1}\operatorname{mesh}(K)
+    \end{align*}
+    The lemma follows.
+\end{proof}
+Turns out, any map $|K|\to|L|$ is homotopic to a realisation of a simplicial map between some barycentric subdivisions of $K,L$.
+\begin{definition}
+    Let $K$ be a simplicial complex.
+    The (open) star of a vertex $v$ of $K$ is the union of the interiors of simplices of $K$ containing $V$, that is,
+    $$\operatorname{St}_K(v)=\bigcup_{v\in\sigma\in K}\sigma^\circ$$
+\end{definition}
+\begin{definition}
+    Let $\phi:|K|\to|L|$ be a map.
+    A simplicial map $f:K\to L$ is said to be a simplicial approximation to $\phi$ if $\phi(\operatorname{St}_K(v))\subset\operatorname{St}_L(f(v))$ for any vertex $v$ of $K$.
+\end{definition}
+It is easy to see that composition of simplicial approximations is also a simplicial approximation.
+\begin{note}
+    If $\phi=|f|$, then the equality holds.
+\end{note}
+\begin{lemma}
+    If $f:K\to L$ is a simplicial approximation to $\phi:|K|\to|L|$, then $\phi\simeq|f|$.
+\end{lemma}
+\begin{proof}
+    Suppose $|L|\subset\mathbb R^m$.
+    We shall show that the straight line homotopy $H(x,t)=t\phi(x)+(1-t)|f|(x)$ works.
+    It suffices to show that $\operatorname{Im}H\subset L$.
+    Let $x\in |K|$ lie in the interior of some simplex $\sigma$, then $\phi(x)$ lies in the interior of some unique $\tau\in L$.
+    We claim that $f(\sigma)\subset\tau$.
+    Indeed, for any vertex $v_i$ of $\sigma$, $x\in\operatorname{St}_K(v_i)$, so $\phi(x)\in \phi(\operatorname{St}_K(v_i))\subset\operatorname{St}_L(f(v_i))$ as $f$ is a simplicial approximation of $\phi$.
+    Thus $\tau^\circ\subset\operatorname{St}_L(f(v_i))$, so $f(v_i)$ is a vertex of $\tau$ which exactly means $f(\sigma)\le\tau$.
+    Now since $\tau$ is convex, the line segment between $|f|(x)$ and $\phi(x)$ is contained in $\tau$, therefore $\operatorname{Im}H\subset |L|$ as desired.
+\end{proof}
+\begin{note}
+    We did not use the assumption of $f$ being a simplicial map in the proof of $f(\sigma)\subset\tau$.
+\end{note}
+Does a simplicial approximation always exist?
+\begin{theorem}[The Simplicial Approximation Theorem]
+    Let $K,L$ be simplicial complexes and $\phi:|K|\to |L|$ a map.
+    Then there exists a positive integer $r$ and a simplicial approximation $f:K^{(r)}\to L$ to $\phi:|K|=|K^{(r)}|\to|L|$.
+\end{theorem}
+\begin{proof}
+    Consider $\mathcal U=\{\phi^{-1}(\operatorname{St}_L(v)):v=\langle v\rangle\in L\}$ is an open cover of $|K|$.
+    We shall show that $\exists \delta>0$ such that $\forall x\in |K|\subset\mathbb R^m$, the ball $B(x,\delta)$ is contained in some element of $\mathcal U$.
+    Indeed, if this is not true, then for each $n$ there is some $x_n\in |K|$ such that $B(x_n,1/n)$ is not contained in any open set of $\mathcal U$.
+    By the compactness of $|K|$, we can assume $x_n$ converges to some $x\in |K|$ by passing to a convergent subsequence.
+    But $x\in U$ for some $U\in\mathcal U$, so there is some $\epsilon>0$ such that $B(x,\epsilon)\subset U$.
+    Take $n$ large enough such that $|x_n-x|<\epsilon/2$ and $1/n<\epsilon/2$, then $B(x_n,1/n)\subset U$, contradiction.\\
+    Choose $r$ sufficiently large such that $\operatorname{mesh}(K^{(r)})<\delta$, the for each vertex $v$ of $K^{(r)}$, we have $\operatorname{St}_{K^{(r)}}(v)\subset B(v,\delta)\subset U$ for some $U\in\mathcal U$.
+    But $U$ takes the form $\phi^{-1}(\operatorname{St}_L(u))$ for some vertex $u$ of $L$.
+    So $\operatorname{St}_{K^{(r)}}(v)\subset\phi^{-1}(\operatorname{St}_L(u))$.
+    We define $f(v)=u$.
+    If $\sigma\in K$ and $x\in\sigma^\circ$, then $f(\sigma)$ is a face of $\tau$ which is the unique simplex of $L$ containing $\phi(x)$ in its interior (this can be proved in the exact same way we proved the claim in the preceding lemma).
+    So $f(\sigma)$ is a simplex of $L$, therefore $f$ is a simplicial map and hence approximation to $\phi$ since we have proven $\phi(\operatorname{St}_{K^{(r)}}(v))\subset\operatorname{St}_L(u)$.
+\end{proof}

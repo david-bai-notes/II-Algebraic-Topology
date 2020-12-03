@@ -1,0 +1,293 @@
+\section{The Fundamental Group}
+\subsection{Basic Ideas}
+Fix a space $X$ and a point $x_0\in X$.
+We consider loops based at $x_0$, i.e. maps $\gamma:I\to X$ with $\gamma(0)=\gamma(1)=x_0$.
+\begin{example}
+    We can take $X=\mathbb R^2\setminus{(0,0)}$ and $x_0\in X$.
+    We can take $\gamma$ to be a loop that doesn't come near $(0,0)$ at all, or one that encloses it.
+\end{example}
+There can be many loops satisfying these conditions, of course, but is it necessary to consider all of them differently?
+For example, we certainly wish to consider two loops to be the same if one can become the other by a ``small perturbation''.\\
+To do this, we will define a notion of equivalence relationship characterising this ``equal after perturbation'' condition.
+The fundamental group of $X$ at $x_0$, as a set, will be the set of equivalence classes of loops defined in this way.\\
+But how would we make this a group?
+Certainly, we want a group operation defined there.
+Pick two loops starting and finishing at $x_0$, we want to define their product as the loop that first goes through one loop, then the other.
+As one expect, this may or may not be commutative, but we do expect it to be associative and has the obvious identity and inverse.
+More importantly, we do not yet know if it is well defined on the equivalence class of loops.
+So we need some technicalities.
+\subsection{Homotopy}
+\begin{definition}
+    Let $f_0,f_1:X\to Y$ be maps.
+    A homotopy between $f_0$ and $f_1$ is a map $F:X\times I\to Y$ such that $F(x,0)=f_0(x)$ and $F(x,1)=f_1(x)$.
+    We often write $f_t(x)=F(x,t)$ to represent the interpretation of $F$ as some kind of deformation.\\
+    If such a map exists for $f_0,f_1$, we say $f_0$ is homotopic to $f_1$, written as $f_0\simeq_F f_1$ or simply $f_0\simeq f_1$.
+\end{definition}
+\begin{example}
+    If $Y\subset\mathbb R^2$ is convex, then any maps $f_0,f_1:X\to Y$ are homotopic by taking $F(x,t)=tf_0(x)+(1-t)f_1(x)$.
+\end{example}
+\begin{definition}
+    For $f_0,f_1:X\to Y$ and $f_0\simeq_F f_1$, if $Z\subset X$ has the property that $F(z,t)=f_0(z)=f_1(z)$ for any $z\in Z,t\in I$, then we say $f_0\simeq f_1$ relative to $Z$.
+\end{definition}
+\begin{lemma}
+    Let $Z\subset X,Y$ be spaces.
+    Then $\simeq$ relative to $Z$ is an equivalence relation on the set of continuous maps $X\to Y$
+\end{lemma}
+\begin{proof}
+    Trivial but let's write it.
+    $f_0\simeq f_0$ via $F(x,t)=f_0(x)$ so it is reflexive.
+    If $f_0\simeq_F f_1$, then $f_1\simeq_{F'}f_0$ via $F^\prime(x,t)=F(x,1-t)$.\\
+    If $f_0\simeq_{F_0}f_1$ and $f_1\simeq_{F_1}f_2$, then $f_0\simeq_F f_2$ via
+    $$F(x,t)=\begin{cases}
+        F_0(x,2t)\text{, for $t\in[0,1/2]$}\\
+        F_1(x,2t-1)\text{, for $t\in[1/2,1]$}
+    \end{cases}$$
+    whose continuity is guaranteed by the gluing lemma.
+\end{proof}
+Recall that a map $f:X\to Y$ is a homeomorphism if it is a bijection and has continuous inverse (in addition to it being continuous itself).
+We can extend this idea to characterise two spaces being ``homotopically the same''.
+\begin{definition}
+    A homotopy equivalence between spaces $X,Y$ is a map $f:X\to Y$ such that there exists a map $g:Y\to X$ such that $f\circ g\simeq \operatorname{id}_Y,g\circ f\simeq\operatorname{id}_X$.
+    If such a map exists, we say $X$ and $Y$ are homotopy equivalent.
+\end{definition}
+Obviously homeomorphic spaces are homotopy equivalent, but the converse is not true as we shall see.
+\begin{example}
+    The letters `$\delta$' and `$o$', as topological spaces, are homotopy equivalent.
+    But obviously they are not homeomorphic.
+\end{example}
+\begin{remark}
+    All of the invariants of this course are homotopy invariants, as we will see.
+\end{remark}
+\begin{example}
+    Let $\ast$ be the one-point space and $f:\mathbb R^n\to\ast$ the unique map and $g:\ast\to\mathbb R^n$ constantly $0$.
+    Then $f\circ g=\operatorname{id}_\ast\simeq\operatorname{id}_\ast$.
+    Now $g\circ f$ is the zero map, which is not the identity but is homotopically equivalent to the identity via $F(x,t)=tx$.
+\end{example}
+\begin{definition}
+    If $X$ is homotopy equivalent to $\ast$, we say $X$ is contractible.
+\end{definition}
+\begin{example}
+    Let $f:S^{n-1}\hookrightarrow\mathbb R^n\setminus\{0\}$be the inclusion and $g:\mathbb R^n\setminus\{0\}\to S^{n-1}$ be $g(x)=x/\|x\|$.
+    Then $g\circ f=\operatorname{id}_{S^{n-1}}$.
+    Although $f\circ g\neq\operatorname{id}_{\mathbb R^n\setminus\{0\}}$, we can consider
+    $$F(x,t)=(1-t)x+t\frac{x}{\|x\|}$$
+    which is a homotopy between $f\circ g$ and $\operatorname{id}_{\mathbb R^n\setminus\{0\}}$.
+    Therefore $S^{n-1}\simeq \mathbb R^n\setminus\{0\}$.
+\end{example}
+\begin{definition}
+    Let $f:X\to Y,g:Y\to X$ be maps.
+    If $g\circ f=\operatorname{id}_X$, we say $X$ is a retract of $Y$ and $g$ is a retraction.\\
+    If in addition that $f\circ g\simeq \operatorname{id}_Y$ relative to $f(X)$, then we say $X$ is a deformation retract of $Y$.
+\end{definition}
+\begin{lemma}
+    Homotopy equivalences of spaces is an equivalence relation on spaces.
+\end{lemma}
+We got a bit imprecise here as we usually learnt equivalence relations on sets, but the collection of all topological spaces is a proper class.
+Nevertheless, we can still simply check for reflexivity, symmetry and transitivity.
+\begin{proof}
+    Reflexivity and symmetry is obvious.
+    For transitivity, suppose the maps shown below are homotopy equivalences:
+    \[
+        \begin{tikzcd}
+            X \arrow[bend left]{r}{f} & Y \arrow[bend left]{l}{g} \arrow[bend left]{r}{f'} & Z \arrow[bend left]{l}{g'}
+        \end{tikzcd}
+    \]
+    Then obviously we want to show $f'\circ f$ and $g\circ g'$ are homotopy inverses of each other.
+    Suppose $g'\circ f'\simeq_{F'}\operatorname{id}_Y$, then the function
+    $$(x,t)\mapsto g\circ F'(f(x),t)$$
+    is a homotopy between $g\circ f$ and $g\circ (g'\circ f')\circ f=(g\circ g')\circ (f'\circ f)$.
+    Therefore $(g\circ g')\circ (f'\circ f)\simeq g\circ f\simeq \operatorname{id}_X$.
+    Using the exact same idea, $(f'\circ f)\circ (g\circ g')\simeq\operatorname{id}_Z$.
+\end{proof}
+\subsection{Loops and the Fundamental Group}
+\begin{definition}
+    Let $X$ be a space, a path in $X$ is a map $\gamma:I\to X$.
+    It is a path from $x_0$ to $x_1$ ($x_0,x_1\in X$) if $\gamma(0)=x_0$ and $\gamma(1)=x_1$.\\
+    A loop based at $x_0\in X$ is a path from $x_0$ to $x_0$.
+\end{definition}
+\begin{definition}
+    Let $\gamma_0,\gamma_1$ be paths from $x_0$ to $x_1$.
+    We say $\gamma_0$ and $\gamma_1$ are (path-)homotopic if they are homotopic relative to $\{0,1\}$.\\
+    This has been shown to be an equivalence relation.
+    We write $[\gamma]$ to denote the equivalence class containing $\gamma$ in the set of all paths from $x_0$ to $x_1$.
+\end{definition}
+\begin{definition}
+    Let $X$ be a space and $x,y,z\in X$.
+    Let $\gamma_1$ be a path from $x$ to $y$ and $\gamma_2$ a path from $y$ to $z$.\\
+    1. The concatenation $\gamma_1\cdot \gamma_2$ of $\gamma_1$ and $\gamma_2$ is the path from $x$ to $z$ defined by
+    $$(\gamma_1\cdot \gamma_2)(t)=\begin{cases}
+        \gamma_1(2t)\text{, for $t\in [0,1/2]$}\\
+        \gamma_2(2t-1)\text{, for $t\in [1/2,1]$}
+    \end{cases}$$
+    which is a proper path as it is continuous due to the gluing lemma.\\
+    2. The constant path at $x$ is the constant function $c_x:t\mapsto x$.\\
+    3. The inverse of a path $\gamma_1$ is a path $\bar\gamma_1$ from $y$ to $x$ defined by $\bar\gamma_1(t)=\gamma_1(1-t)$.
+\end{definition}
+\begin{theorem}\label{fund_group}
+    Let $X$ be a space and $x_0\in X$.
+    Write $\pi_1(X,x_0)$ to denote the set of homotopy classes of loops based at $x_0$.
+    Then $\pi_1(X,x_0)$ is a group under the operation $[\gamma_1][\gamma_2]=[\gamma_1\cdot\gamma_2]$, with identity $[c_{x_0}]$ and $[\gamma]^{-1}=[\bar\gamma]$.
+\end{theorem}
+This group is called the fundamental group of $X$.
+\begin{lemma}\label{fund_group_well_def}
+    If $\gamma_0\simeq\gamma_1$ are paths to $y$ and $\delta_0\simeq \delta_1$ are paths from $y$, then $\gamma_0\cdot\delta_0\simeq\gamma_1\cdot\delta_1$ and $\bar\gamma_0\simeq\bar\gamma_1$.
+\end{lemma}
+\begin{proof}
+    Suppose $\gamma_0\simeq_F\gamma_1,\delta_0\simeq_G\delta_1$.
+    Define
+    $$H(s,t)=\begin{cases}
+        F(2s,t)\text{, for $s\in[0,1/2]$}\\
+        G(2s-1,t)\text{, for $s\in[1/2,1]$}
+    \end{cases}$$
+    Then we immediately have $\gamma_0\cdot\delta_0\simeq_H\gamma_1\cdot\delta_1$.\\
+    Now for the inverses, $F'(s,t)=F(1-s,t)$ gives $\bar\gamma_0\simeq_{F'}\bar\gamma_1$.
+\end{proof}
+\begin{lemma}\label{fund_group_ax}
+    Let $x,y,z\in X$.
+    If there are paths $\alpha$ from $w$ to $x$, $\beta$ from $x$ to $y$, $\gamma$ from $y$ to $z$.
+    Then\\
+    1. $(\alpha\cdot\beta)\cdot\gamma\simeq\alpha\cdot(\beta\cdot\gamma)$.\\
+    2. $\alpha\cdot c_x\simeq c_x\cdot\alpha\simeq\alpha$.\\
+    3. $\alpha\cdot\bar\alpha\simeq c_x$.
+\end{lemma}
+\begin{proof}
+    Note that the composition of any path $\gamma$ and an order-preserving surjection $\phi I\to I$ is homotopic to the original path via $F(s,t)=\gamma(t\phi(s)+(1-t)s)$.
+    This is called a reparameterisation.
+    Now take $\phi$ to be the function
+    $$\phi(t)=\begin{cases}
+        t/2\text{, for $t\in[1,1/2]$}\\
+        t-1/4\text{, for $t\in[1/2,3/4]$}\\
+        2t-1\text{, for $t\in[3/4,1]$}
+    \end{cases}$$
+    Then, as one can check
+    $$(\alpha\cdot\beta)\cdot\gamma\simeq((\alpha\cdot\beta)\cdot\gamma)\circ\phi=\alpha\cdot(\beta\cdot\gamma)$$
+    To see $\alpha\cdot c_x\simeq\alpha$, just reparameterise $\alpha$ by
+    $$t\mapsto\begin{cases}
+        2t\text{, for $t\in [0,1/2]$}\\
+        1\text{, for $t\in[1/2,1]$}
+    \end{cases}$$
+    The other side is analogous.\\
+    Indeed $c_x\simeq_F\alpha\cdot\bar\alpha$ via
+    $$F(s,t)=\begin{cases}
+        \alpha(2s)\text{, for $s\in[0,t/2]$}\\
+        \alpha(t)\text{, for $s\in[t/2,1-t/2]$}\\
+        \alpha(2-2s)=\bar\alpha(2s-1)\text{, for $s\in[1-t/2,1]$}
+    \end{cases}$$
+    which can be verified to work.
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{fund_group}]
+    Combining Lemma \ref{fund_group_well_def} and Lemma \ref{fund_group_ax} shows the result immediately.
+\end{proof}
+\begin{example}
+    Consider $X=\mathbb R^n$ and $x_0=0$, then for any loop $\gamma$ based at $x_0$ we have $\gamma\simeq c_{x_0}$ via the straightline homotopy $F(x,t)=(1-t)\gamma(x)+tx_0$.
+    Therefore $\pi_1(X,x_0)$ is the trivial group.
+\end{example}
+Now, as we mentioned in the introduction, we still want a property of this algebraic invariant regarding maps between the relevant objects.
+\begin{lemma}
+    Let $f:X\to Y$ be a map, $x_0\in X$ and $y_0=f(x_0)$.
+    Then there is an induced group homomorphism $f_\ast:\pi_1(X,x_0)\to\pi_1(Y,y_0)$ defined by $f_\ast([\gamma])=[f\circ \gamma]$.
+    Further:\\
+    1. If $f\simeq f'$ relative to $x_0$, then $f_\ast=f_\ast'$.\\
+    2. if $g:Y\to Z$ with $g(y_0)=z_0$ is another map, then $g_\ast\circ f_\ast=(g\circ f)_\ast$.\\
+    3. $(\operatorname{id}_X)_\ast=\operatorname{id}_{\pi_1(X,x_0)}$.
+\end{lemma}
+\begin{proof}
+    $f_\ast$ is always well-defined as a function.
+    Suppose $\gamma_1\simeq_F\gamma_2$, then we obviously have $f\circ \gamma_1\simeq_{f\circ F}f\circ \gamma_2$.\\
+    To see it is a group homomorphism, we observe
+    $$f\circ(\gamma_1\cdot\gamma_2)=(f\circ \gamma_1)\cdot(f\circ\gamma_2)\implies f_\ast([\gamma_1\cdot\gamma_2])=f_\ast([\gamma_1])\cdot f_\ast([\gamma_2])$$
+    For 1, if $f\simeq_F f'$ relative to $x_0$, then $f\circ\gamma\simeq_{F'} f'\circ\gamma$ via $F'(s,t)=F(\gamma(s),t)$, so $f_\ast([\gamma])=[f\circ\gamma]=[f'\circ\gamma]=f_\ast'([\gamma])$.
+    2 and 3 are completely obvious.
+\end{proof}
+One thing we are not satisfied:
+We define the fundamental group with reference to a basepoint.
+Is there a way to remove it, at least for path-connected space?
+\begin{lemma}\label{indep_basepoint}
+    Let $X$ be a space.
+    A path $\alpha$ from $x_0$ to $x_1$ induces a group isomorphism $\alpha_\#:\pi_1(X,x_0)\to\pi_1(X,x_1)$ via $\alpha_\#([\gamma])=[\bar\alpha\cdot\gamma\cdot\alpha]$.
+    Further:\\
+    1. If $\alpha\simeq\alpha'$, then $\alpha_\#=\alpha_\#'$.\\
+    2. $(c_{x_0})_\#=\operatorname{id}_{\pi_1(X,x_0)}$.\\
+    3. If $\beta$ is a path from $x_1$ to $x_2$, then $(\alpha\cdot\beta)_\#=\beta_\#\circ\alpha_\#$.\\
+    4. If $f:X\to Y$ is a map with $y_i=f(x_i)$, then
+    $$(f\circ\alpha)_\#\circ f_\ast=f_\ast\circ\alpha_\#$$
+\end{lemma}
+In short, the path $\alpha_\#(\gamma)$ goes from $x_1$, walk through $\bar\alpha$ to $x_0$, do the loop, then go back to $x_1$ via $\alpha$.
+\begin{proof}
+    It is very easy to see that $\alpha$ is well-defined.
+    To see it is a group homomorphism, observe that for loops $\gamma,\delta$ based at $x_0$, we have
+    \begin{align*}
+        \alpha_\#(\gamma)\cdot\alpha_\#(\delta)&\simeq(\bar\alpha\cdot\gamma\cdot\alpha)\cdot(\bar\alpha\cdot\delta\cdot\alpha)\\
+        &\simeq\bar\alpha\cdot\gamma\cdot(\alpha\cdot\bar\alpha)\cdot\delta\cdot\alpha\\
+        &\simeq\bar\alpha\cdot(\gamma\cdot\delta)\cdot \alpha\\
+        &\simeq\alpha_\#(\gamma\cdot\delta)
+    \end{align*}
+    Note also that $\bar\alpha_\#$ has
+    $$\bar\alpha_\#\circ\alpha_\#(\gamma)\simeq \alpha\cdot(\bar\alpha\cdot\gamma\cdot\alpha)\cdot\bar\alpha\simeq(\alpha\cdot\bar\alpha)\cdot\gamma\cdot(\alpha\cdot\bar\alpha)\simeq c_{x_0}\cdot\gamma\cdot c_{x_0}\simeq\gamma$$
+    for any $\gamma$, so $\bar\alpha_\#$ is inverse to $\alpha_\#$, hence $\alpha_\#$ is indeed a group isomorphism.\\
+    1,2,3 are completely trivial.
+    For 4, we basically just want
+    \[
+        \begin{tikzcd}
+            \pi_1(X,x_0)\arrow{r}{\alpha_\#}\arrow[swap]{d}{f_\ast}&\pi_1(X,x_1)\arrow{d}{f_\ast}\\
+            \pi_1(Y,y_0)\arrow[swap]{r}{(f\circ\alpha)_\#}&\pi_1(Y,y_1)
+        \end{tikzcd}
+    \]
+    to commute.
+    To see this,
+    \begin{align*}
+        ((f\circ\alpha)_\#\circ f_\ast)([\gamma])&=(f\circ\alpha)_\#([f\circ\gamma])\\
+        &=[(\overline{f\circ\alpha})\cdot(f\circ\gamma)\cdot (f\circ\alpha)]\\
+        &=[f\circ(\bar\alpha\cdot\gamma\cdot\alpha)]\\
+        &=f_\ast(\alpha_\#(\gamma))
+    \end{align*}
+    As we want.
+\end{proof}
+In particular, the fundamental group does not depend on the basepoint if the space is path-connected.
+\begin{definition}
+    If $X$ is a path-connected soace and $\pi_1(X,x_0)$ is trivial for some (hence every) $x_0\in X$, then we say $X$ is simply connected.
+\end{definition}
+\begin{lemma}\label{hom_commute_path}
+    Let $x_0\in X_1$ and $f,g:X\to Y$ with $f\simeq_Fg$.
+    Set $\alpha(t)=F(x_0,t)$ a path from $f(x_0)$ to $g(x_0)$.
+    Then
+    \[
+        \begin{tikzcd}
+            \pi_1(Y,f(x_0))\arrow{r}{\alpha_\#}&\pi_1(Y,g(x_0))\\
+            \pi_1(X,x_0)\arrow{u}{f_\ast}\arrow[swap]{ur}{g_\ast}&
+        \end{tikzcd}
+    \]
+    commutes.
+\end{lemma}
+\begin{proof}
+    We need to check that for a loop $\gamma$ based at $x_0$, we have $\bar\alpha\cdot(f\circ\gamma)\cdot\alpha\simeq g\circ\gamma$.
+    Consider $G:I\times I\to Y$ defined by $G(s,t)=F(\gamma(s),t)$.
+    Let $a,b_1,b_2,b_3,b:I\to I^2$ be paths defined by
+    $$a(t)=(t,1),b_1(t)=(0,1-t),b_2(t)=(t,0),b_3(t)=(1,t),b=b_1\cdot b_2\cdot b_3$$
+    Easily $a\simeq b$.
+    Then $(G\circ a)(s)=G(s,1)=F(\gamma(s),1)=(g\circ\gamma)(s)$, so $G\circ a=g\circ\gamma$.
+    Calculation shows that $G\circ b_1=\bar\alpha, G\circ b_2=f\circ\gamma, G\circ b_3=\alpha$.
+    Hence
+    $$g\circ\gamma\simeq G\circ a\simeq G\circ b\simeq G\circ (b_1\cdot b_2\cdot b_3)\simeq (G\circ b_1)\cdot(G\circ b_2)\cdot(G\circ b_3)\simeq \bar\alpha\cdot(f\circ\gamma)\cdot\alpha$$
+    As desired.
+\end{proof}
+\begin{theorem}\label{hom_eqv_iso}
+    If $f:X\to Y$ is a homotopy equivalence, then for any $x_0\in X$,
+    $$f_\ast:\pi_1(X,x_0)\to\pi_1(Y,f(x_0))$$
+    is an isomorphism of groups.
+\end{theorem}
+\begin{proof}
+    Let $g:Y\to X$ be an homotopy inverse of $f$.
+    Then $\operatorname{id}_X\simeq_Fg\circ f$ and $\operatorname{id}_Y\simeq_Gf\circ g$ for some homotopy $F,G$.
+    Let $\alpha(t)=F(x_0,t)$ be a path joining $\operatorname{id}_X(x_0)=x_0$ and $g(f(x_0))$, then by Lemma \ref{hom_commute_path} we have
+    $$g_\ast\circ f_\ast=(g\circ f)_\ast=\alpha_\#\circ (\operatorname{id}_X)_\ast=\alpha_\#$$
+    But $\alpha_\#$ is an isomorphism hence injective by Lemma \ref{indep_basepoint}, so in particular $f_\ast$ is an injection.
+    By the same argument $\beta(t)=G(f(x_0),t)$ has $f_\ast\circ g_\ast=\beta_\#$ which is an isomorphism hence surjective, so $f_\ast$ is surjective.
+    Therefore $f_\ast$ is bijective, hence an isomorphism.
+\end{proof}
+\begin{corollary}
+    Contractible spaces are simply connected.
+\end{corollary}
+\begin{proof}
+    By definition and Theorem \ref{hom_eqv_iso}.
+\end{proof}

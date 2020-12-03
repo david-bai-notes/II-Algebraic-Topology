@@ -1,0 +1,61 @@
+\section{Introduction}
+\subsection{Motivation and Examples}
+We start by asking a natural question that appears frequently in the study of topology:
+\begin{problem}\label{homeo}
+    How can we tell if two topological space are different (i.e. not homoeomorphic)?
+\end{problem}
+For example, if we let $X$ to be the donut-like surface in $\mathbb R^3$, and $Y$ be a similar donut but with two holes instead.
+Our intuition tells us they are not homeomorphic because, well, $X$ has one hole and $Y$ has two -- but this is not much a proof.\\
+Our basic strategy of coping with problems like these in algebraic topology is to associate each topological space $X$ (often, in a specific class) with a group $H(X)$ and associate each continuous map $f:X\to Y$ a homomorphism of groups $H(f):H(X)\to H(Y)$.
+We obviously want $H$ to preserve compositions of functions and identities as well.
+\footnote{In short, we just want $H$ to be a functor from a subcategory of $\mathbf{Top}$ to an abelian category, preferably $\mathbf{Grp}$.}
+With certain constructions, if $X\cong Y$ as topological spaces, we can ensure that $H(X)\cong H(Y)$ as groups.
+In other words, $H$ exists as an algebraic invariant.
+As it is much easier to show two groups are not isomorphic, we can solve some cases of Problem \ref{homeo} where $H(X)$ can be shown not to isomorphic to $H(Y)$.
+The study of algebraic topology is basically the hunt of such algebraic invariants.\\
+Another application of this idea is to solve the Extension Problem:
+\begin{problem}[The Extension Problem]
+    Let $X$ be a topological space and $A\subset X$ a subspace.
+    If we have $f:A\to Y$ is a continuous map, how do we know if there is a continuous map $F:X\to Y$ with $F|_A=f$?
+\end{problem}
+That is, we want to know if there exists $F$ such that the diagram
+\[
+    \begin{tikzcd}
+        A \arrow[hookrightarrow]{d} \arrow{r}{f} & Y\\
+        X \arrow[dashed,swap]{ur}{F}&
+    \end{tikzcd}
+\]
+commutes.
+An example of this is the following theorem:
+\begin{theorem}
+    There is no continuous function $F:D^n\to S^{n-1}$ such that
+    \[
+        \begin{tikzcd}
+            S^{n-1} \arrow[hookrightarrow]{d} \arrow{r}{\operatorname{id}} & S^{n-1}\\
+            D^n \arrow[swap]{ur}{F}
+        \end{tikzcd}
+    \]
+    commutes.
+\end{theorem}
+Here, $D^n$ is the $n$-disk while $S^{n-1}$ is the $(n-1)$-sphere, which is simply the hypersurface enclosing $D^n$.
+How does the idea of the algebraic invariant come in handy on this problem?
+Obviously we do not yet have the correct tool to do it now that the course has just started, but we can take a glimpse of the idea involved.
+\begin{proof}
+    Construct an invariant $H$ such that $H(S^{n-1})\cong\mathbb Z$ and $H(D^n)\cong 0$.
+    Then the diagram in the statement of the theorem will implies that
+    \[
+        \begin{tikzcd}
+            \mathbb Z\arrow{d} \arrow{r}{\operatorname{id}} & \mathbb Z\\
+            0 \arrow{ur}
+        \end{tikzcd}
+    \]
+    commute.
+    But this is absurd.
+\end{proof}
+All these seems nice, right?
+But first, we really need a clever construction of such a nontrivial algebraic invariants bearing such nice properties.
+\subsection{Conventions}
+Unless otherwise stated, we adopt the following conventions:\\
+When we mention ``space'', we always mean a topological space.
+And when we say a ``map'' between two spaces, we always mean a continuous one.
+By $I$, we mean the unit interval $[0,1]$.

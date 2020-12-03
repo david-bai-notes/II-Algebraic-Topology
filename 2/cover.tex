@@ -1,0 +1,381 @@
+\section{Covering Spaces}
+\subsection{Definitions and Examples}
+\begin{definition}
+    Let $p:\hat{X}\to X$ be a map.
+    An open subset $U\subset X$ is evenly covered if there exists a set $\Delta_U$ with discrete topology and a homeomorphism $\psi:p^{-1}(U)\cong\Delta_U\times U$ such that the diagram
+    \[
+        \begin{tikzcd}
+            p^{-1}(U)\arrow{r}{\psi}\arrow[swap]{d}{p}&\Delta_U\times U\arrow{dl}{(\delta,u)\mapsto u}\\
+            U&
+        \end{tikzcd}
+    \]
+    commutes.
+\end{definition}
+For $\delta\in\Delta_U$, we write $U_\delta=\{\delta\}\times U\subset\Delta_U\times U$.
+We can identify it as a subspace of $p^{-1}(U)$ via $\psi^{-1}$.
+Then, we can canonically identify $\Delta_U$ with $p^{-1}(\{x\})$ for any $x\in U$.
+Also note that we have
+$$p^{-1}(U)\cong\Delta_U\times U\cong\coprod_{\delta\in\Delta_U}U$$
+\begin{definition}
+    If every point in $X$ has an evenly covered neighbourhood, then $p$ is a covering map and $\hat{X}$ is a covering space of $X$.
+\end{definition}
+\begin{example}
+    1. Take $X=I, \Delta_X=\{1,2,3\}, \hat{X}=\Delta_X\times X$ and take $p:\hat{X}\to X$ to be the projection on second coordinate.\\
+    But if we take $\hat{X}=I\sqcup[0,1/2)$, then the obvious projection is not a covering map as it fails at the inverse of a small neighbourhood of $1/2$.\\
+    2. Let $\hat{X}=\mathbb R$ and $S^1\subset\mathbb C$ the unit circle.
+    We take $p:t\mapsto e^{2\pi it}$.
+    This is a covering map.
+    Indeed, if $U\subsetneq S^1$ is a proper open subset and $z_1\in S^1\setminus U$, then we can choose a branch of the logarithm well-defined on $S^1\setminus\{z_1\}$.
+    Write this choice of branch as $\log$.
+    Now every point $\hat{z}\in p^{-1}(U)$ can be uniquely written as $\hat{z}=k+\log(z)/(2\pi i)$ for some integer $k$, which induces the homeomorphism $p^{-1}(U)\cong\mathbb Z\times U$.
+    So $p$ is a covering map.\\
+    3. Let $\hat{X}=X=S^1\subset C$ and $p(z)=z^n$ for some $n\in\mathbb Z_+$ is a covering map.
+    Indeed, choose a local branch for $\sqrt[n]{\cdot}$ on a small enough open proper subset $U\subsetneq S^1$ allows us to write $\hat{z}\in p^{-1}(U)$, uniquely, $\hat{z}=e^{2\pi ik/n}\sqrt[n]{z}$ for $k\in\mathbb Z/n\mathbb Z$.
+    So $\Delta_{S^1}=\mathbb Z/n\mathbb Z$ works.\\
+    4. Let $\hat{X}=S^2$ and $G=\mathbb Z/2\mathbb Z$ acting on $S^2$ by the antipodal map $(x,y,z)\mapsto (-x,-y,-z)$.
+    Take $X=\hat{X}/G$.
+    We can identify $X$ with the real projective plane $\mathbb{RP}^2$.
+    The quotient map $p$ is easily a covering map.
+    For $x\in\hat{X}$, take a small enough neighbourhood $U$ of $x$ such that $(-U)\cap U=\varnothing$.
+    Let $V=p(U)$, then $p^{-1}(V)=U\cap(-U)$, so we can just take $\Delta_U=\mathbb Z/2\mathbb Z$.
+\end{example}
+\begin{definition}
+    A covering map $p:\hat{X}\to X$ is $n$-sheeted (where $n\in\mathbb N\cup\{\infty\}$) if $|p^{-1}(\{x\})|=n$ for every $x\in X$.
+    If such an $n$ exists, we call $n$ the degree of $p$.
+\end{definition}
+\subsection{Lifting Properties}
+We want to connect fundamental group and covering spaces.
+This is done by introducing the notion of lifting.
+\begin{definition}
+    Let $p:\hat{X}\to X$ be a convering map and $f:Y\to X$ a map.
+    A lift of $f$ to $\hat{X}$ is a map $\hat{f}:Y\to\hat{X}$ such that the diagram
+    \[
+        \begin{tikzcd}
+            &\hat{X}\arrow{d}{p}\\
+            Y\arrow[swap]{r}{f}\arrow[dashed]{ur}{\hat{f}}&X
+        \end{tikzcd}
+    \]
+    commutes.
+\end{definition}
+\begin{definition}
+    A space $X$ is locally path connected if for any $x\in X$ and open set $U\ni x$, there is a neighbourhood $x\ni V\subset U$ that is path-connected.
+\end{definition}
+\begin{lemma}[Uniqueness of Lifting]\label{lift_unique}
+    Let $p:\hat{X}\to X$ be a covering map and $\hat{f}_1,\hat{f}_2:Y\to\hat{X}$ lifts of $f:Y\to X$.
+    If $Y$ is connected and locally path connected, and there is $y_0\in Y$ such that $\hat{f}_1(y_0)=\hat{f}_2(y_0)$, then $\hat{f}_1=\hat{f}_2$.
+\end{lemma}
+However, there exists connected but not locally path-connected space, like the topologist's comb.
+\begin{proof}
+    We will show that the following set
+    $$S=\{y\in Y|\hat{f}_1(y)=\hat{f}_2(y)\}$$
+    equals $Y$ by showing it is open and closed.
+    The result then follows by the connectedness of $Y$ and the fact that $y_0\in S$ (so $S$ is nonempty).\\
+    Let $y_1\in Y$ be arbitrary and $U$ be an evenly covered open neighbourhood of $f(y_1)$.
+    Choose $y\in V\subset f^{-1}(U)$ be a path-connected open neighbourhood of $y_1$.
+    We shall show that $V\subset S$ if $y_1\in S$ and $V\subset Y\setminus S$ if $y_1\notin S$, which implies what we want.
+    To see this, choose any $y\in V$, then there is a path $\alpha:I\to V$ such that $\alpha(0)=y_1$ and $\alpha(1)=y$.
+    Then $\hat{f}_i\circ\alpha$ is a path in $\hat{X}$ connecting $\hat{f}_i(y_1)$ and $\hat{f}_i(y)$.
+    But $p\circ\hat{f}_i\circ\alpha=f\circ\alpha$ as $\hat{f}_i$ are lifts.
+    The image of $f\circ\alpha$ is contained in $f(V)\subset U$ by design.
+    This tells us $\hat{f}_i\circ\alpha$ is a path in $p^{-1}(U)\cong\Delta_U\times U$.
+    But $\Delta_U$ is discrete, so for each $i$, $\hat{f}_i(y_1)$ and $\hat{f}_i(y)$ must in fact lie in the same copy of $U$ as they must be in the same path component.
+    We are actually done.
+    Indeed, if $y_1\in S$, then $\hat{f}_1(y_1)=\hat{f}_2(y_1)$, so the copies of $U$ those paths $\hat{f}_i\circ\alpha$ lie on are actually the same.
+    This forces $\hat{f}_i(y)$ to be equal since if we denote that particular copy as $U'$ then we have a homeomorphism $p':U'\to U$ by restricting the covering map which gives
+    $$\hat{f}_1(y)=(p')^{-1}\circ f(y)=\hat{f}_2(y)$$
+    If $y_1\notin S$ but $y\in S$, then by reversing the argument for $y,y_1$ shows $y_1\in S$ which is false.
+    (Alternatively, one can argue by observing that each copy of $U$ contains a unique point of $p^{-1}\circ f(\{y_1\})$).
+\end{proof}
+\begin{definition}
+    Let $\gamma:I\to X$ be a path from $x_0$ and $p:\hat{X}\to X$ be a covering map.
+    A lift of $\gamma$ at $\hat{x}_0\in\hat{X}$ is a lift $\hat{\gamma}:I\to\hat{X}$ of $\gamma$ such that $\hat{\gamma}(0)=\hat{x}_0$.
+\end{definition}
+In particular, $p(\hat{x}_0)=x_0$ necessarily.
+In the special case where $\gamma$ is contained in an evenly covered open set, its lift is just picking one of the copies of the open set containing $\hat{x}_0$ in the pre-image under the covering map and carve the same path there.
+In fact, we can say more.
+\begin{lemma}[Path-Lifting Lemma]\label{path_lift}
+    Let $p:\hat{X}\to X$ be a covering map and $\gamma:I\to X$ be a path from $x_0$.
+    For any $\hat{x}_0\in p^{-1}(x_0)$, there exists a unique lift $\hat{\gamma}$ of $\gamma$ from $\hat{x}_0$.
+\end{lemma}
+\begin{proof}
+    The uniqueness follows from Lemma \ref{lift_unique}.
+    For existence, we consider
+    $$S=\{t\in I:\gamma|_{[0,t]}\text{ has a lift at $\hat{x}_0$ to $\hat{X}$}\}$$
+    and we will show it is open and closed.
+    As $0\in S$, we know $S\neq\varnothing$, therefore it shall imply what we want.\\
+    Let $t_0\in I$ and $U$ be an evenly covered neighbourhood of $\gamma(t_0)$ and let $V\subset\gamma^{-1}(U)$ be an open interval containing $t_0$.
+    Again we will show $t_0\in S$ implies $V\subset S$ and $t_0\notin S$ implies $V\subset I\setminus S$ which gives the result.
+    Let $t\in V$ and suppose first that $t_0\in S$.
+    If $t\le t_0$ then automatically $t\in S$.
+    Otherwise $t>t_0$.
+    Denote the lift of $\gamma|_{[0,t_0]}$ by $\hat{\gamma}|_{[0,t_0]}$.
+    But then since $U\supset f(V)$ is evenly covered, we can just pick the copy of $U$ where $\hat{\gamma}|_{[0,t_0]}(t_0)$ resides in and continue $\hat{\gamma}$ there by following $\gamma$.
+    More precisely, suppose that copy is $U'$ and $p':U'\to U$ is the homeomoephism by restricting $p$, then
+    $$[0,t]\ni s\mapsto\begin{cases}
+        \hat\gamma(s)\text{, for $s\in[0,t_0]$}\\
+        (p')^{-1}\circ\gamma(s)\text{, for $s\in[t_0,t]$}
+    \end{cases}$$
+    which works as a lift of $\gamma|_{[0,t]}$.
+    So $t\in S$.\\
+    If $t_0\notin S$ and $t\in V$, then if $t\in S$ and $t\ge t_0$ we get an immediate contradiction.
+    But if $t<t_0$ and $t\in S$, we can extend the lift on $[0,t]$ in the way we just described to $t_0$ which shows $t_0\in S$, another contradiction.
+    So we are done.
+\end{proof}
+\begin{lemma}
+    If $p:\hat{X}\to X$ is a covering map and $X$ is path-connected, then $p$ is an $n$-sheeted cover for some $n\in\mathbb N\cup\{\infty\}$.
+\end{lemma}
+Actually we can do something stronger:
+We can prove that if $x,y\in X$ then there is a bijection between $p^{-1}(\{x\})$ and $p^{-1}(\{y\})$.
+In fact, this is exactly what we shall prove.
+\footnote{I think this lemma is trivial by considering the set of points $x$ such that $p^{-1}(x)$ has a given (fixed) cardinality which can be easily shown to be both open and closed, but the lecturer prefers to use path-lifting lemma.}
+\begin{proof}
+    Let $\gamma$ be a path in $X$ from $x$ to $y$.
+    For any $\hat{x}\in p^{-1}(\{x\})$, then there is a unique path $\hat{\gamma}_{\hat{x}}$ lifting $\gamma$ with starting point $\hat{x}$.
+    This gives a map $\psi:p^{-1}(\{y\})\to p^{-1}(\{y\})$ via $\psi(\hat{x})=\hat{\gamma}_{\hat{x}}(1)$.
+    We shall show that it has an inverse $\phi$ defined in a similar way but using the path $\bar\gamma$ from $y$ to $x$.
+    So $\phi(\hat{y})=\widehat{(\bar\gamma)}_{\hat{y}}(1)$.
+    We shall show that $\phi\circ\psi=\operatorname{id}_{p^{-1}(\{x\})}$, the other side is completely analogous.
+    Indeed,
+    $$\phi\circ\psi(\hat{x})=\phi(\hat{\gamma}_{\hat{x}}(1))=\widehat{(\bar\gamma)}_{\hat{\gamma}_{\hat{x}}(1)}(1)$$
+    But then $\hat{\gamma}_{\hat{x}}\cdot\widehat{(\bar\gamma)}_{\hat{\gamma}_{\hat{x}}(1)}$ is a lift of $\gamma\cdot\bar\gamma$, but so is $\hat{\gamma}_{\hat{x}}\cdot\overline{(\hat{\gamma}_{\hat{x}})}$ hence by the uniqueness of lifts they have common endpoints.
+    In particular, $\widehat{(\bar\gamma)}_{\hat{\gamma}_{\hat{x}}(1)}(1)=\hat{x}$ as desired.
+\end{proof}
+Here comes a lemma that really links together fundamental groups and covering maps
+\begin{lemma}[Homotopy Lifting Lemma]\label{homotopy_lifting}
+    Let $p:\hat{X}\to X$ be a covering map and $f_0:Y\to X$ a map from a locally path-connected space.
+    Suppose $F:Y\times I\to X$ is a homotopy with $\forall y\in Y,F(y,0)=f_0(y)$ and there exists a lifting $\hat{f}_0:Y\to\hat{X}$ of $f_0$.
+    Then there exists a unique lifting $\hat{F}:Y\times I\to\hat{X}$ with $\hat{F}(y,0)=\hat{f}_0(y)$ for any $y\in Y$.
+\end{lemma}
+\begin{remark}
+    In the special case where $Y$ is a one-point space we reproduce Lemma \ref{path_lift}.
+\end{remark}
+\begin{proof}
+    For each $y\in Y$, the homotopu $F$ defines a path $\gamma_y(t)=F_{y,t}$.
+    By Lemma \ref{path_lift}, each $\gamma_t$ has a unique lift $\hat{\gamma}_t$ from $\hat{f}_0(y)$.
+    So we essentially need $\hat{F}(y,t)=\hat{\gamma}_t(y)$.
+    It remains to show that such an $\hat{F}$ has to be continuous.
+    The trick is to construct on open subsets of $Y\times I$ a differently constructed lift $\tilde{F}$ which is a priori continuous, and then show that $\hat{F}$ agrees with $\tilde{F}$ on these open sets.
+    Fix $y_0\in Y$.
+    The goal is to find a neighbourhood $V$ of $y_0$ and a lifting of $F$ on $V\times I$.
+    For any $t\in I,F(y_0,t)\in X$ has an evenly covered neighbourhood $U_t\subset X$.
+    Then by continuity and the definition of product topology $F^{-1}(U_t)$ contains an open neighbourhood of $(y_0,t)\in Y\times I$ of the form $V_t\times[(t-\epsilon_t,t+\epsilon_t)\cap I]$ for $\epsilon_t>0$ and $V_t\ni y_0$ is open.
+    As $Y$ is locally path-connected we might as well assume $V_t$ are path-connected.
+    As $\{y_0\}\times I$ is compact, there is a finite set $T\subset I$ such that $\{(t_i-\epsilon_{t_i},t_i+\epsilon_{t_i}):t_i\in T\}$ covers $I$.
+    We then take $V=\bigcap_{t_i\in T}V_{t_i}$ which is open and path-connected.
+    Take $J_i=(t_i-\epsilon_{t_i},t_i+\epsilon_{t_i})\cap I$.
+    Then we know that $F(V\times J_i)$ is contained in an evenly covered open subset $U_i$ of $X$ for each $i$.
+    Let $U_i'$ be the unique copy of $U_i$ in $p^{-1}(U_i)$ such that $\hat{F}(\{y_0\}\times J_i)=\hat{\gamma}_{y_0}(J_i)\subset U_i'$.
+    Let $p_i:U_i'\to U_i$ be the homeomorphism between them.
+    Now for $(y,t)\in V\times I$, we define $\tilde{F}(y,t)=p_i^{-1}\circ F(y,t)$ for $t\in J_i$.
+    It is quite obvious it is well-defined, but let's prove it.
+    Suppose $t\in J_i\cap J_j$ and let $\alpha$ be a path in $V$ from $y_0$ to $y$.
+    Define $\alpha_t(s)=F(\alpha(s),t)$.
+    Then $p_i^{-1}\circ \alpha_t$ and $p_j^{-1}\circ\alpha_t$ are lifts of $\alpha_t$.
+    Furthermore they have the same initial values at $\hat{F}(y_0,t)$, so they are equal by Lemma \ref{lift_unique}.
+    Consequently $p_i^{-1}\circ F(y,t)=p_j^{-1}\circ F(y,t)$ as desired.
+    So $\tilde{F}$ is a well-defined and hence continuous by its definition.\\
+    As $V$ is path-connected and $\tilde{F}(\cdot,0)$ is a lift of $f_0$ that agrees with $\hat{f}_0$ at $y_0$, we have $\forall y\in V,\hat{F}(y,0)=\hat{f}_0(y)$ by Lemma \ref{lift_unique}.
+    Also, for each $y\in V$, $\hat{F}(y,\cdot)$ is a lift of $\gamma_y$ at $\hat{f}_0(y)$.
+    Therefore $\tilde{F}(y,t)=\hat{\gamma}_y(t)$ again by Lemma \ref{lift_unique}, thus $\tilde{F}=\hat{F}$ on $V\times I$.
+    In particular, $\hat{F}$ is continuous in $V\times I$, hence it is continuous.
+\end{proof}
+\subsection{Lifting and Fundamental Groups}
+\begin{lemma}
+    Let $p:\hat{X}\to X$ be a covering map and $F:I\times I\to X$ be a homotopy of paths.
+    Then any lift $\hat{F}$ of $F$ is also a homotopy of paths.
+\end{lemma}
+\begin{proof}
+    As $F$ is a homotopy of paths, $F(0,\cdot)$ and $F(1,\cdot)$ are constant paths in $X$.
+    Therefore $\hat{F}(0,\cdot)$ and $\hat{F}(1,\cdot)$ are lifts those constant paths , hence constant.
+\end{proof}
+\begin{lemma}
+    Let $p:\hat{X}\to X$ be a covering map with $\hat{x}\in \hat{X}$ and $x=p(\hat{x})$, then the induced homeomorphism $p_\ast:\pi_1(\hat{X},\hat{x})\to\pi_1(X,x)$ via $[\hat\gamma]\mapsto [p\circ\hat\gamma]$ is injective.
+\end{lemma}
+\begin{proof}
+    Suppose $[\hat{\gamma}]\in\ker p_\ast$, then $\gamma=p\circ\hat{\gamma}\simeq c_x$.
+    If $F$ is a homotopy between $\gamma$ and $c_x$, we can lift it to a homotopy $\tilde{F}$ from $\hat{\gamma}$ which is a homotopy of paths by the preceding lemma.
+    In particular, $\hat{F}$ is a homotopy between $\hat\gamma$ and $c_{\hat{x}}$, so $[\hat\gamma]=[c_{\hat{x}}]$ is the identity.
+    This shows the result.
+\end{proof}
+\begin{remark}
+    So we can view $\pi_1(\hat{X},\hat{x})$ as the subgroup $p_\ast(\pi(\hat{X},\hat{x}))\le\pi_1(X,x)$.
+    Also note that given $[\gamma]\in\pi_1(X,x)$, we get a map $p^{-1}(\{x\})\to p^{-1}(\{x\})$ via $\hat{x}\mapsto \hat{\gamma}_{\hat{x}}(1)$ which is necessarily bijective.
+    So this defines a right group action of $\pi_1(X,x)$ on $p^{-1}(\{x\})$.
+    For $\hat{x}\in p^{-1}(\{x\})$, this is induced by $\hat{x}\cdot\gamma=\hat\gamma_{\hat{x}}(1)$.
+    Easily $(\hat{x}\cdot\gamma)\cdot\delta=\hat{x}\cdot(\gamma\cdot\delta)$.
+\end{remark}
+\begin{lemma}
+    Let $p:\hat{X}\to X$ be a covering map and suppose $\hat{X}$ is path-connected.
+    Let $x\in X$, and let $\Pi$ denote the set of right cosets of $p_\ast(\pi_1(\hat{X},\hat{x}))$ in $\pi_1(X,x)$.
+    Then the map $\Pi\to p^{-1}(\{x\})$ via $p_\ast(\pi_1(\hat{X},\hat{x}))[\gamma]\mapsto \hat{x}\cdot\gamma$ is a bijection.
+    Further, this bijection satisfies
+    $$p_\ast(\pi_1(\hat{X},\hat{x}))[\gamma][\delta]\mapsto\hat{x}\cdot(\gamma\cdot\delta)$$
+    where $\gamma,\delta$ are loops based at $x$.
+\end{lemma}
+\begin{proof}
+    If $[\delta]\in p_\ast(\pi_1(\hat{X},\hat{x}))$, then $\hat{x}\cdot\delta=\hat{x}$.
+    This obviously implies the map is well-defined.
+    To prove this is a bijection, we shall use the Orbit-Stabiliser Theorem.
+    Note that the stabliser of $\hat{x}$ on this right action is the set of loops $[\gamma]$ at $x$ such that $\hat\gamma_{\hat{x}}(1)=\hat{x}$ where $\hat{\gamma}_{\hat{x}}$ is the lift of $\gamma$ from $\hat{x}$.
+    But then $\hat\gamma_{\hat{x}}$ is a loop, so $\gamma\in p_\ast(\pi_1(\hat{X},\hat{x}))$.
+    This means that the stabiliser of $\hat{x}$ is exactly $p_\ast(\pi_1(\hat{X},\hat{x}))$.
+    It remains to show that the action is transitive.
+    Let $\hat{y}\in p^{-1}(\{x\})$, then there is a path $\hat{\gamma}$ from $\hat{x}$ to $\hat{y}$, so $p\circ\hat{\gamma}$ is a loop based at $x$ and $\hat{x}\cdot\gamma=\hat{y}$.
+\end{proof}
+\begin{remark}
+    So the degree of the covering map $p$ is just the index of $p_\ast(\pi_1(\hat{x},\hat{x}))$ in $\pi_1(X,x)$.
+\end{remark}
+\begin{example}
+    Consider $\pi_1(S^1,x)$.
+    The covering map $p_1:\mathbb R\to S^1$ via $t\mapsto e^{2\pi it}$ has infinite degree and $p_2:S^1\to S^1$ via $z\mapsto z^n$ has degree $n$ for any $n>1$.
+    So what we conclude from the lemma above is that $\pi_1(S_1,x)$ is an infinite group with subgroups of every finite index.
+    A natural guess is then $\pi_1(S^1,x)\cong\mathbb Z$.
+    We will prove it later.
+\end{example}
+\begin{definition}
+    If $p:\hat{X}\to X$ is a covering map and $\hat{X}$ is simply connected, then $\hat{X}$ is called a univeral cover of $X$.
+\end{definition}
+\begin{example}
+    The map $t\mapsto e^{2\pi it}$ makes $\mathbb R$ a universal cover of $S^1$.
+\end{example}
+\begin{corollary}
+    If $p:\hat{X}\to X$ is a universal cover, then for any choice of $\hat{x}\in p^{-1}(\{x\})$ there is a bijection
+    $$\pi_1(X,x)\to p^{-1}(\{x\}),[\gamma]\mapsto \hat{x}\cdot\gamma$$
+\end{corollary}
+\begin{proof}
+    Immediate from what we have discussed.
+\end{proof}
+So we can get a group structure on $p^{-1}(\{x\})$ which is essentially isomorphic to $\pi_1(X,x)$ and determined by $\hat{x}\cdot (\gamma\cdot\delta)=(\hat{x}\cdot\gamma)\cdot\delta$.
+This allows us to actually calculate some fundamental groups.
+\begin{example}
+    Now we compute the fundamental group of the circle.
+    Let $p:\mathbb R\to S^1$ be the usual universal cover.
+    Hence there is a bijection
+    $$\pi_1(S^1,1)\to p^{-1}(\{1\})=\mathbb Z\subset\mathbb R$$
+    Now for $n\in\mathbb Z$, take $\tilde{\gamma}_n(t)=nt$ to be a path from $0$ to $n$ in $\mathbb R$ and let $\gamma_n=p\circ\hat{\gamma}_n$ which has to be a loop based at $1$.
+    Clearly $0\cdot\gamma_n=\hat{\gamma}_n(1)=n$.
+    Thus any loop in $S^1$ based at $1$ is homotopic to some $\gamma_n$.
+    So the bijection becomes $[\gamma_n]\mapsto n$.
+    It remains to show that it is a homomorphism.
+    Indeed, for any $m\in\mathbb Z$, we know that $m+\hat{\gamma}_n$ is a lift of $\gamma_n$ from $m$ to $m+n$.
+    So
+    $$(0\cdot\gamma_m)\cdot\gamma_n=m\cdot\gamma_n=m+n=0\cdot\gamma_{m+n}$$
+    Hence it is indeed a homomorphism, it then follows that it is an isomorphism, which means $\pi_1(S^1,1)\cong\mathbb Z$.
+\end{example}
+In complex analysis, we defined the winding number as, loosely speaking, the number of times a loop wraps around a certain point.
+It then follows that this notion is essentially describing the homotopy class a curve is in when we put the thing in $\pi_1(S^1,1)$.
+There are more applications of this idea.
+\subsection{Applications of Fundamental Groups}
+\begin{theorem}[No-Retraction Theorem]\label{no_retraction}
+    The identity map of $S^1$ does not extend to a map $r:D^2\to S^1$ (where we view $S^1$ as $\partial D^2$).
+\end{theorem}
+That is, $S^1$ is not a retract of $D^2$.
+We have essentially covered the proof in the introduction, where all technical details have just been covered.
+\begin{proof}
+    If such an $r$ exists, let $\iota:S^1\hookrightarrow D^2$ be the inclusion map, then $r\circ\iota=\operatorname{id}_{S^1}$.
+    As $D^2$ is contractible, $\pi_1(D^2,1)=0$, so there is a factorisation
+    $$(\operatorname{id}_{S^1})_\ast=(r\circ\iota)_\ast=r_\ast\circ\iota_\ast:\pi_1(S^1,1)\to\pi_1(D^2,1)\to\pi_1(S^1,1)$$
+    But the last diagram is just $\mathbb Z\to\{0\}\to\mathbb Z$.
+    This means that $(\operatorname{id}_{S^1})_\ast$ has to be constant.
+    But it isn't.
+    Contradiction.
+\end{proof}
+\begin{theorem}[Brouwer's Fixed Point Theorem]
+    Any map $f:D^2\to D^2$ has a fixed point.
+\end{theorem}
+\begin{proof}
+    Suppose not, then let $g:D^2\to S^1$ be the map given by projecting $f(x)$ through $x$ onto $S^1$.
+    That is, $g(x)$ is the intersection of the line joining $x$ and $f(x)$ and $S^1$ that is closer to $x$.
+    Then $g$ is continuous and $g(x)=x$ for any $x\in S^1$.
+    This however means that $g$ restricts to $\operatorname{id}_{S^1}$, contradicing Theorem \ref{no_retraction}.
+\end{proof}
+\begin{theorem}[The Fundamental Theorem of Algebra]
+    Every nonconstant polynomial $p:\mathbb C\to\mathbb C$ has a zero.
+\end{theorem}
+\begin{proof}
+    Let $r:\mathbb C\setminus\{0\}\to S^1$ via $r(z)=z/|z|$ which is a retraction.
+    For $R\ge 0$, we define $\lambda_R:S^1\to\mathbb C, \lambda_R(z)=Rz$.
+    If $p$ has no zero, then we can define $f_R:r\circ p\circ \lambda_R:S^1\to S^1$.
+    Easily for any $R_1,R_2\in\mathbb R_{\ge 0}$, $f_{R_1}$ and $f_{R_2}$ are homotopic, hence $(f_{R_1})_\ast=(f_{R_2})_\ast$.
+    But these induced maps are all homomorphisms $\mathbb Z\to\mathbb Z$.
+    Therefore all $(f_R)^\ast$ is given by multiplication by $d$ for some fixed $d\in\mathbb N\setminus\{0\}$.
+    But $f_0$ is constant, therefore $d=0$ and $(f_R)_\ast$ are constantly zero.
+    But for very large $R$, the leading term dominates $p$, so it is clear that $(f_R)_\ast$ is given by multiplication by $\deg p\neq 0$, contradiction.
+\end{proof}
+\begin{definition}
+    A space $X$ is locally simply connected if, for every $x\in X$ and open neighbourhood $U$ of $x$, there exists a simply connected neighbourhood $x\in V\subset U$.
+\end{definition}
+\begin{example}[Non-example]
+    Take the Hawaii Earing space
+    $$X=\bigcup_{n=1}^\infty \left\{(x,y)\in\mathbb R^2:\left( x-\frac{1}{n} \right)+y^2=\frac{1}{n^2}\right\}$$
+    then no open neighbourhood of $(0,0)$ is simply connected.
+\end{example}
+\begin{theorem}[Existence of Universal Cover]
+    Let $X$ be a path-connected space such that $X$ is localled simply connected, then there exists a universal cover $p:\hat{X}\to X$.
+\end{theorem}
+\begin{proof}[Sketch of proof]
+    Fix $x_0\in X$ and consider the set $\mathscr X$ of all paths $\gamma$ from $x_0$.
+    Define $\hat{X}=\mathscr X/\simeq$ where $\simeq$ is the path homotopy equivalence relation.
+    The intended map $p:\hat{X}\to X$ is gives by $p([\gamma])=\gamma(1)$.
+    The tricky bit is to find a topology on $\hat{X}$ making it work, which -- guess what -- is skipped.
+\end{proof}
+\begin{example}
+    Take $X$ to be the figure eight, then $\hat{X}$ looks like the Caylay graph of the free group $F_2$.
+\end{example}
+\subsection{The Galois Correspondence}
+The idea is to classify all covering spaces using subgroups of the fundamental group, which is in certain ways analogous to the idea of Galois correspondence in Galois theory.
+\begin{definition}
+    Let $X$ be a path-connected space and $p_1:\hat{X}_1\to X_1, p_2:\hat{X}_2\to X$.
+    An isomorphism of covering spaces is a homeomorphism $\phi:\hat{X}_1\to\hat{X}_2$ such that
+    \[
+        \begin{tikzcd}
+            X&\hat{X}_1\arrow{dl}{\phi}\arrow[swap]{l}{p_1}\\
+            \hat{X}_2\arrow{u}{p_2}&
+        \end{tikzcd}
+    \]
+    commutes.
+\end{definition}
+Note also that $\phi^{-1}$ is automatically an isomorphism of covering spaces as well
+If $\hat{X}_i$ are equipped with basepoints $\hat{x}_i\in\hat{X}_i$ and $\phi(\hat{x}_1)=\hat{x}_2$, we say $\phi$ is based.
+\begin{remark}
+    Note that $\phi$ is a lift of $p_1$ to $\hat{X}_2$, so by Lemma \ref{lift_unique}, a based isomorphism is uniquely determined by the basepoints $\phi(\hat{x}_1)=\hat{x}_2$ if $\hat{X}_1$ is connected and locally path-connected.
+\end{remark}
+\begin{theorem}[Galois Correspondence with Basepoints]\label{based_galois}
+    Let $X$ be a path-connected, locally simply connected space with basepoint $x_0$.
+    The map which sends a covering $p:\hat{X}\to X$ equipped with a basepoint $\hat{x}_0\in p^{-1}(\{x_0\})$ to the subgroup $p_\ast(\pi_1(\hat{X},\hat{x}_0))\le\pi_1(X,x_0)$ induces a bijection between the set of based isomorphism classes of path-connected covering spaces with basepoint and the set of subgroups of $\pi_1(X,x_0)$.
+\end{theorem}
+\begin{proof}
+    Not dreadfully hard but omitted.
+\end{proof}
+\begin{example}
+    As $\pi_1(S^1,1)=\mathbb Z$, each subgroup of $\mathbb Z$ is of the form $n\mathbb Z$ for natural number $n$ (including $0$).
+    Then the usual $p:\mathbb R\to S^1, t\mapsto e^{2\pi it}$ corresponds to the subgroup $\{0\}$, and the maps $p:S^1\to S^1, z\mapsto z^n$ corresponds to the subgroups $n\mathbb Z$ for $n\neq 0$.
+    Hence, these are the only path-connected covering spaces of $S^1$ up to based isomorphism.
+\end{example}
+\begin{corollary}
+    Let $X$ be a path-connected and locally simply connected space, then any two universal covers $p_1:\hat{X}_1\to X$ and $p_2:\hat{X}_2\to X$ are isomorphic.
+\end{corollary}
+\begin{proof}
+    Immediate.
+\end{proof}
+\begin{corollary}[Galois Correspondence without Basepoints]\label{unbased_galois}
+    Let $X$ be a path-connected, locally simply connected space with basepoint $x_0$.
+    Then the map that sends a covering $p:\hat{X}\to X$ equipped with a basepoint $\hat{x}_0\in p^{-1}(\{x_0\})$ to the subgroup $p_\ast(\pi_1(\hat{X},\hat{x}))\le\pi_1(X,x_0)$ induces a bijection between (unbased) isomorphism classes of path-connected convering spaces of $X$ and conjugacy classes of subgroups of $\pi_1(X,x_0)$.
+\end{corollary}
+\begin{proof}
+    This map is surjective due to Theorem \ref{based_galois}.
+    To see it is injective, we need to show that if $(p_1)_\ast(\pi_1(\hat{X}_1,\hat{x}_1))$ and $(p_2)_\ast(\pi_1(\hat{X}_2,\hat{x}_2))$ are conjugate subgroups of $\pi_1(X,x_0)$, then there is an (unbased) isomorphism $\phi:\hat{X}_1\to\hat{X}_2$ of covering spaces.\\
+    Suppose
+    $$(p_1)_\ast(\pi_1(\hat{X}_1,\hat{x}_1))=[\gamma](p_2)_\ast(\pi_1(\hat{X}_2,\hat{x}_2))[\bar\gamma]$$
+    for some $[\gamma]\in\pi_1(X,x_0)$.
+    Let $\widehat{\bar{\gamma}}$ be the lift of $\bar\gamma$ at $\hat{x}_2$ and $\hat{x}_2'$ be the other endpoint of $\widehat{\bar\gamma}$.
+    By the last part of Lemma \ref{indep_basepoint},
+    \begin{align*}
+        [\gamma](p_2)_\ast(\pi_1(\hat{X}_2,\hat{x}_2))[\bar\gamma]&=\bar\gamma_\#((p_2)_\ast(\pi_1(\hat{X}_2,\hat{x}_2)))\\
+        &=(p_2)_\ast(\widehat{\bar\gamma}_\#(\pi_1(\hat{X}_2,\hat{x}_2)))\\
+        &=(p_2)_\ast(\pi_1(\hat{X}_2,\hat{x}_2'))
+    \end{align*}
+    Therefore $(p_1)_\ast(\pi_1(\hat{X}_1,\hat{x}_1))=(p_2)_\ast(\pi_1(\hat{X}_2,\hat{x}_2'))$.
+    Theorem \ref{based_galois} then gives a based isomorphism $(\hat{X}_1,\hat{x}_1)\cong(\hat{X}_2,\hat{x}_2')$.
+    In particular, $\hat{X}_1\cong\hat{X}_2$ as (unbased) covering spaces.
+\end{proof}

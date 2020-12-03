@@ -1,0 +1,55 @@
+\documentclass[a4paper]{article}
+
+\usepackage{hyperref}
+
+\newcommand{\triposcourse}{Algebraic Topology}
+\newcommand{\triposterm}{Michaelmas 2020}
+\newcommand{\triposlecturer}{Prof. M. Gross}
+\newcommand{\tripospart}{II}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+
+\usepackage{tikz-cd}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{note}{Note}
+
+\title{\triposcourse{}
+\thanks{Based on the lectures under the same name taught by \triposlecturer{} in \triposterm{}.}}
+\author{Zhiyuan Bai}
+\date{Compiled on \today}
+
+\setcounter{section}{-1}
+
+\begin{document}
+    \maketitle
+    This document serves as a set of revision materials for the Cambridge Mathematical Tripos Part \tripospart{} course \textit{\triposcourse{}} in \triposterm{}.
+    However, despite its primary focus, readers should note that it is NOT a verbatim recall of the lectures, since the author might have made further amendments in the content.
+    Therefore, there should always be provisions for errors and typos while this material is being used.
+    \tableofcontents
+    \input{0/intro.tex}
+    \input{1/fund.tex}
+    \input{2/cover.tex}
+    \input{3/seifert.tex}
+    \input{4/simp.tex}
+    \input{5/simphomol.tex}
+    \input{6/homol.tex}
+    \input{7/rational.tex}
+\end{document}
